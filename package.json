@@ -1,0 +1,9 @@
+{
+  "name": "kcsa-studio",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix demo",
+    "build": "npm run build --prefix demo",
+    "preview": "npm run preview --prefix demo"
+  }
+}
