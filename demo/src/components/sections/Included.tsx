@@ -4,8 +4,8 @@ import { included } from "@/data/included";
 
 export function Included() {
   return (
-    <section id="incluso" className="px-5 py-24 md:px-8 md:py-32 lg:px-12">
-      <div className="mb-16 max-w-4xl">
+    <section id="incluso" className="px-5 py-16 md:px-8 md:py-28 lg:px-12 lg:py-32">
+      <div className="mb-10 max-w-4xl md:mb-16">
         <SectionHeader
           index="07"
           label="Incluso"
@@ -23,7 +23,7 @@ export function Included() {
               <span className="font-mono text-[10px] tracking-[0.24em] text-muted">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <span className="font-display text-2xl tracking-tight md:text-3xl">
+              <span className="font-display text-xl tracking-tight md:text-3xl">
                 {item}
               </span>
             </li>

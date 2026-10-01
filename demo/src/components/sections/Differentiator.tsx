@@ -1,4 +1,5 @@
 import { MediaFrame } from "@/components/MediaFrame";
+import { DepthPhoto } from "@/components/media/DepthPhoto";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeader } from "@/components/SectionHeader";
 import { site } from "@/data/site";
@@ -7,8 +8,8 @@ const lines = ["Seu momento.", "Minha direção.", "Uma história."];
 
 export function Differentiator() {
   return (
-    <section id="diferencial" className="px-5 py-24 md:px-8 md:py-32 lg:px-12">
-      <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-16">
+    <section id="diferencial" className="px-5 py-16 md:px-8 md:py-28 lg:px-12 lg:py-32">
+      <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-16">
         <Reveal className="lg:col-span-6">
           <SectionHeader
             index="04"
@@ -37,27 +38,29 @@ export function Differentiator() {
         </Reveal>
 
         <Reveal delay={0.1} className="lg:col-span-6">
-          <figure>
-            <MediaFrame
-              src={site.images.differentiator}
-              alt={site.images.differentiatorAlt}
-              className="aspect-[4/5] w-full md:aspect-[5/6]"
-              sizes="(min-width: 1024px) 42vw, 100vw"
-              imgClassName="object-[50%_28%]"
-            />
-          </figure>
+          <DepthPhoto intensity={0.8}>
+            <figure>
+              <MediaFrame
+                src={site.images.differentiator}
+                alt={site.images.differentiatorAlt}
+                className="aspect-[4/5] w-full md:aspect-[5/6]"
+                sizes="(min-width: 1024px) 42vw, 100vw"
+                imgClassName="object-[50%_28%]"
+              />
+            </figure>
+          </DepthPhoto>
         </Reveal>
       </div>
 
-      <Reveal className="mt-20 border-y border-foreground/10 py-10 md:mt-28 md:py-16">
-        <p className="font-mono mb-8 text-[10px] tracking-[0.32em] text-muted uppercase">
+      <Reveal className="mt-12 border-y border-foreground/10 py-8 md:mt-28 md:py-16">
+        <p className="font-mono mb-6 text-[10px] tracking-[0.32em] text-muted uppercase md:mb-8">
           A experiência
         </p>
-        <ul className="grid gap-6 md:grid-cols-3 md:gap-10">
+        <ul className="grid gap-4 md:grid-cols-3 md:gap-10">
           {lines.map((line) => (
             <li
               key={line}
-              className="font-display text-4xl leading-[0.95] tracking-tight sm:text-5xl md:text-6xl"
+              className="font-display text-3xl leading-[0.95] tracking-tight sm:text-5xl md:text-6xl"
             >
               {line}
             </li>

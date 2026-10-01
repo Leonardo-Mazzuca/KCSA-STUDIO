@@ -33,20 +33,22 @@ export function ProjectLightbox({ project, onClose }: ProjectLightboxProps) {
       aria-labelledby="projeto-titulo"
       className="fixed inset-0 z-[70] bg-black"
     >
-      <div className="grid h-[100svh] md:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)]">
-        <img
-          src={project.image}
-          alt={project.alt}
-          className="h-[58svh] w-full object-cover md:h-full"
-        />
-        <div className="flex flex-col justify-between gap-10 overflow-y-auto border-t border-white/10 px-5 py-8 md:border-t-0 md:border-l md:px-10 md:py-16">
+      <div className="grid h-svh min-h-0 grid-rows-[minmax(0,48svh)_minmax(0,1fr)] md:grid-cols-[minmax(0,1.25fr)_minmax(260px,0.75fr)] md:grid-rows-none">
+        <div className="relative min-h-0 min-w-0 overflow-hidden px-6 py-8 md:px-14 md:py-16">
+          <img
+            src={project.image}
+            alt={project.alt}
+            className="h-full w-full object-contain"
+          />
+        </div>
+        <div className="flex min-h-0 flex-col justify-between gap-10 overflow-y-auto border-t border-white/10 px-5 py-8 md:border-t-0 md:border-l md:px-10 md:py-16">
           <div>
             <p className="font-mono text-[10px] tracking-[0.28em] text-muted uppercase">
               {project.category} · {project.year}
             </p>
             <h2
               id="projeto-titulo"
-              className="font-display mt-4 text-4xl tracking-tight md:text-5xl"
+              className="font-display mt-4 text-3xl tracking-tight md:text-5xl"
             >
               {project.title}
             </h2>

@@ -20,12 +20,19 @@ export const site = {
   },
   contact: {
     email: "contato@kcsastudio.com",
-    instagram: "https://instagram.com/SEUINSTAGRAM",
-    instagramHandle: "@SEUINSTAGRAM",
-    whatsapp: "https://wa.me/5511999999999",
-    whatsappLabel: "Enviar mensagem",
+    instagram: "https://instagram.com/kcsastudio",
+    instagramHandle: "@kcsastudio",
+    phone: "+55 11 96904-1720",
+    whatsapp: "https://wa.me/5511969041720",
+    whatsappLabel: "Fale comigo",
   },
   logo: "/images/logo.png",
+  video: {
+    src: "/video/kcsa-logo.mp4",
+    mobile: "/video/kcsa-logo-mobile.mp4",
+    poster: "/video/kcsa-logo-poster.jpg",
+    alt: "Identidade KCSA STUDIO — wordmark com diafragma no O",
+  },
   images: {
     about: "/images/kelvin-sobre.jpg",
     aboutAlt:

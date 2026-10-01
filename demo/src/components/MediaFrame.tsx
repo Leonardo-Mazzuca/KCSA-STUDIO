@@ -27,7 +27,7 @@ export function MediaFrame({
         decoding={priority ? "sync" : "async"}
         fetchPriority={priority ? "high" : "auto"}
         className={cn(
-          "h-full w-full object-cover transition-transform duration-[1200ms] ease-out will-change-transform group-hover:scale-[1.035]",
+          "h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]",
           imgClassName,
         )}
       />

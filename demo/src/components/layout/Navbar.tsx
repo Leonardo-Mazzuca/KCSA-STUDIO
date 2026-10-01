@@ -51,10 +51,12 @@ export function Navbar() {
             </a>
           ))}
           <a
-            href="#contato"
+            href={site.contact.whatsapp}
+            target="_blank"
+            rel="noreferrer"
             className="inline-flex items-center gap-2 bg-paper px-4 py-2 font-mono text-[10px] tracking-[0.26em] text-ink uppercase transition-colors hover:bg-foreground"
           >
-            Contato
+            {site.contact.whatsappLabel}
             <ArrowUpRight className="size-3.5" aria-hidden="true" />
           </a>
         </nav>
@@ -78,15 +80,17 @@ export function Navbar() {
         >
           <nav
             aria-label="Mobile"
-            className="flex min-h-[calc(100svh-72px)] flex-col justify-between px-5 pt-10 pb-28"
+            className="flex min-h-[calc(100svh-72px)] flex-col justify-between px-5 pt-8 pb-10"
           >
             <ul className="flex flex-col gap-2">
               {navigation.map((item, index) => (
                 <li key={item.href}>
                   <a
-                    href={item.href}
+                    href={item.href === "#contato" ? site.contact.whatsapp : item.href}
+                    target={item.href === "#contato" ? "_blank" : undefined}
+                    rel={item.href === "#contato" ? "noreferrer" : undefined}
                     onClick={() => setOpen(false)}
-                    className="font-display flex items-baseline gap-4 text-5xl tracking-tight"
+                    className="font-display flex items-baseline gap-3 py-1 text-4xl tracking-tight"
                   >
                     <span className="font-mono text-[10px] tracking-[0.24em] text-muted">
                       0{index + 1}

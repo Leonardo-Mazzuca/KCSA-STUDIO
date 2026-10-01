@@ -7,8 +7,8 @@ import { site } from "@/data/site";
 
 export function Instagram() {
   return (
-    <section id="instagram" className="px-5 py-24 md:px-8 md:py-32 lg:px-12">
-      <div className="mb-14 grid gap-10 lg:grid-cols-12 lg:items-end">
+    <section id="instagram" className="px-5 py-16 md:px-8 md:py-28 lg:px-12 lg:py-32">
+      <div className="mb-8 grid gap-6 lg:mb-14 lg:grid-cols-12 lg:items-end">
         <Reveal className="lg:col-span-7">
           <SectionHeader
             index="08"

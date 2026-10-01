@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { SectionRail } from "@/components/layout/SectionRail";
 import { SkipLink } from "@/components/layout/SkipLink";
+import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { Home } from "@/pages/Home";
 
 function ScrollToHash() {
@@ -39,6 +40,7 @@ export default function App() {
       <SectionRail />
       <Home />
       <Footer />
+      <WhatsAppFloat />
     </>
   );
 }

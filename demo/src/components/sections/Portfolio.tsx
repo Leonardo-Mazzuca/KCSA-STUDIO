@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { ProjectLightbox } from "@/components/ProjectLightbox";
 import { MediaFrame } from "@/components/MediaFrame";
+import { DepthPhoto } from "@/components/media/DepthPhoto";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeader } from "@/components/SectionHeader";
 import { projects, type Project } from "@/data/projects";
@@ -20,9 +21,9 @@ function ProjectMeta({
   className?: string;
 }) {
   return (
-    <div className={cn("flex items-end justify-between gap-4", className)}>
-      <div>
-        <p className="font-display text-xl tracking-tight md:text-2xl">
+    <div className={cn("flex min-w-0 items-end justify-between gap-3", className)}>
+      <div className="min-w-0">
+        <p className="font-display text-base tracking-tight md:text-2xl">
           {project.title}
         </p>
         <p className="font-mono mt-1 text-[10px] tracking-[0.22em] text-muted uppercase">
@@ -63,8 +64,8 @@ function ProjectButton({
         sizes={sizes}
         imgClassName={imgClassName}
       />
-      <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/28 group-focus-visible:bg-black/28" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-full bg-paper px-4 py-4 text-ink transition-transform duration-500 group-hover:translate-y-0 group-focus-visible:translate-y-0">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100" />
+      <div className="pointer-events-none absolute inset-x-3 bottom-3 translate-y-2 rounded-2xl bg-paper/92 px-4 py-3 text-ink opacity-0 shadow-[0_10px_30px_rgba(0,0,0,0.28)] backdrop-blur-sm transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
         <ProjectMeta project={project} className="text-ink" />
       </div>
     </button>
@@ -86,8 +87,8 @@ export function Portfolio() {
     .filter((item): item is Project => Boolean(item));
 
   return (
-    <section id="trabalhos" className="px-5 py-24 md:px-8 md:py-32 lg:px-12">
-      <div className="mb-14 grid gap-10 lg:mb-20 lg:grid-cols-12 lg:items-end">
+    <section id="trabalhos" className="px-5 py-16 md:px-8 md:py-28 lg:px-12 lg:py-32">
+      <div className="mb-10 grid gap-8 lg:mb-20 lg:grid-cols-12 lg:items-end">
         <Reveal className="lg:col-span-7">
           <SectionHeader
             index="02"
@@ -120,6 +121,7 @@ export function Portfolio() {
       <div id="galeria">
         {featured ? (
           <Reveal>
+            <DepthPhoto className="w-full" intensity={0.7}>
             <button
               type="button"
               onClick={() => setSelected(featured)}
@@ -135,15 +137,16 @@ export function Portfolio() {
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/15 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-95" />
               <div className="absolute right-5 bottom-5 left-5 flex items-end justify-between gap-4 md:right-8 md:bottom-8 md:left-8">
                 <ProjectMeta project={featured} className="text-white" />
-                <span className="inline-flex size-11 items-center justify-center border border-white/50 bg-white/10 text-white backdrop-blur-sm transition-colors group-hover:bg-paper group-hover:text-ink">
+                <span className="inline-flex size-11 items-center justify-center rounded-full border border-white/50 bg-white/10 text-white backdrop-blur-sm transition-colors group-hover:bg-paper group-hover:text-ink">
                   <ArrowUpRight className="size-4" aria-hidden="true" />
                 </span>
               </div>
             </button>
+            </DepthPhoto>
           </Reveal>
         ) : null}
 
-        <div className="mt-6 grid gap-6 md:grid-cols-12 md:gap-5">
+        <div className="mt-4 grid gap-4 md:mt-6 md:grid-cols-12 md:gap-5">
           {olhar ? (
             <Reveal className="md:col-span-7">
               <ProjectButton
@@ -157,7 +160,7 @@ export function Portfolio() {
             </Reveal>
           ) : null}
 
-          <div className="grid gap-6 md:col-span-5 md:gap-5">
+          <div className="grid gap-4 md:col-span-5 md:gap-5">
             {noiva ? (
               <Reveal delay={0.08}>
                 <ProjectButton
@@ -185,7 +188,7 @@ export function Portfolio() {
         </div>
 
         {danca ? (
-          <Reveal className="mt-6 md:mt-5">
+          <Reveal className="mt-4 md:mt-5">
             <ProjectButton
               project={danca}
               className="relative aspect-[4/5] sm:aspect-[16/9]"
@@ -197,7 +200,7 @@ export function Portfolio() {
           </Reveal>
         ) : null}
 
-        <div className="mt-6 grid gap-6 md:grid-cols-2 md:gap-5">
+        <div className="mt-4 grid gap-4 md:mt-6 md:grid-cols-2 md:gap-5">
           {presenca ? (
             <Reveal>
               <ProjectButton
@@ -224,7 +227,7 @@ export function Portfolio() {
         </div>
 
         {maos ? (
-          <Reveal className="mt-6 md:mt-5">
+          <Reveal className="mt-4 md:mt-5">
             <ProjectButton
               project={maos}
               className="relative aspect-[4/5] sm:aspect-[16/8]"
@@ -236,25 +239,25 @@ export function Portfolio() {
           </Reveal>
         ) : null}
 
-        <div className="mt-16 md:mt-24">
-          <p className="font-mono mb-6 text-[10px] tracking-[0.28em] text-muted uppercase">
+        <div className="mt-10 md:mt-24">
+          <p className="font-mono mb-5 text-[10px] tracking-[0.28em] text-muted uppercase">
             Outros instantes
           </p>
-          <div className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 md:-mx-8 md:px-8 lg:-mx-12 lg:px-12">
+          <div className="no-scrollbar grid grid-cols-2 gap-3 md:-mx-8 md:flex md:snap-x md:snap-mandatory md:gap-4 md:overflow-x-auto md:px-8 lg:-mx-12 lg:px-12">
             {strip.map((project) => (
               <button
                 key={project.id}
                 type="button"
                 onClick={() => setSelected(project)}
-                className="group w-[72vw] shrink-0 snap-start sm:w-[42vw] lg:w-[24vw]"
+                className="group w-full min-w-0 text-left md:w-[42vw] md:shrink-0 md:snap-start lg:w-[24vw]"
               >
                 <MediaFrame
                   src={project.image}
                   alt={project.alt}
                   className="aspect-[4/5]"
-                  sizes="(min-width: 1024px) 24vw, (min-width: 640px) 42vw, 72vw"
+                  sizes="(min-width: 1024px) 24vw, (min-width: 768px) 42vw, 48vw"
                 />
-                <ProjectMeta project={project} className="mt-4" />
+                <ProjectMeta project={project} className="mt-3" />
               </button>
             ))}
           </div>

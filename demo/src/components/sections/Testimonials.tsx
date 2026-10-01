@@ -4,8 +4,8 @@ import { testimonials } from "@/data/testimonials";
 
 export function Testimonials() {
   return (
-    <section id="depoimentos" className="px-5 py-24 md:px-8 md:py-32 lg:px-12">
-      <div className="mb-16 max-w-4xl md:mb-24">
+    <section id="depoimentos" className="px-5 py-16 md:px-8 md:py-28 lg:px-12 lg:py-32">
+      <div className="mb-10 max-w-4xl md:mb-24">
         <SectionHeader
           index="06"
           label="Depoimentos"
@@ -19,10 +19,10 @@ export function Testimonials() {
 
       <ul className="divide-y divide-foreground/10 border-y border-foreground/10">
         {testimonials.map((item, index) => (
-          <li key={item.quote} className="py-10 md:py-14">
+          <li key={item.quote} className="py-7 md:py-14">
             <Reveal delay={index * 0.06}>
-              <blockquote className="grid gap-8 lg:grid-cols-12 lg:items-end">
-                <p className="font-display text-2xl leading-snug tracking-tight text-pretty italic sm:text-3xl md:text-4xl lg:col-span-9">
+              <blockquote className="grid gap-4 lg:grid-cols-12 lg:items-end lg:gap-8">
+                <p className="font-display text-xl leading-snug tracking-tight text-pretty italic sm:text-3xl md:text-4xl lg:col-span-9">
                   “{item.quote}”
                 </p>
                 <footer className="font-mono text-[10px] tracking-[0.26em] text-muted uppercase lg:col-span-3 lg:text-right">
