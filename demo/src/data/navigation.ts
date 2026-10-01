@@ -3,7 +3,7 @@ export type NavItem = {
   href: string;
 };
 
-export const demoPath = "/demo";
+export const demoPath = "";
 
 export function sectionHash(href: string) {
   const index = href.indexOf("#");
@@ -11,9 +11,9 @@ export function sectionHash(href: string) {
 }
 
 export const navigation: NavItem[] = [
-  { label: "Início", href: `${demoPath}#inicio` },
-  { label: "Sobre", href: `${demoPath}#sobre` },
-  { label: "Trabalhos", href: `${demoPath}#trabalhos` },
-  { label: "Serviços", href: `${demoPath}#servicos` },
-  { label: "Contato", href: `${demoPath}#contato` },
+  { label: "Início", href: "#inicio" },
+  { label: "Trabalhos", href: "#trabalhos" },
+  { label: "Sobre", href: "#sobre" },
+  { label: "Serviços", href: "#servicos" },
+  { label: "Contato", href: "#contato" },
 ];

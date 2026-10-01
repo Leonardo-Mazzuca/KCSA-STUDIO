@@ -29,9 +29,9 @@ export function Navbar() {
         scrolled || open ? "bg-background" : "bg-transparent",
       )}
     >
-      <div className="flex items-center justify-between px-5 py-4 md:px-8 lg:px-12 xl:pr-24">
+      <div className="flex items-center justify-between px-5 py-4 md:px-8 lg:px-12">
         <a
-          href="/demo#inicio"
+          href="#inicio"
           className="font-mono text-[11px] tracking-[0.34em] uppercase"
         >
           {site.name}
@@ -39,9 +39,9 @@ export function Navbar() {
 
         <nav
           aria-label="Principal"
-          className="hidden items-center gap-8 lg:flex"
+          className="hidden items-center gap-7 lg:flex"
         >
-          {navigation.map((item) => (
+          {navigation.filter((item) => item.href !== "#contato").map((item) => (
             <a
               key={item.href}
               href={item.href}
@@ -50,15 +50,14 @@ export function Navbar() {
               {item.label}
             </a>
           ))}
+          <a
+            href="#contato"
+            className="inline-flex items-center gap-2 bg-paper px-4 py-2 font-mono text-[10px] tracking-[0.26em] text-ink uppercase transition-colors hover:bg-foreground"
+          >
+            Contato
+            <ArrowUpRight className="size-3.5" aria-hidden="true" />
+          </a>
         </nav>
-
-        <a
-          href="/demo#contato"
-          className="hidden items-center gap-2 border border-white/25 bg-paper px-4 py-2 font-mono text-[10px] tracking-[0.26em] text-ink uppercase transition-colors hover:bg-foreground lg:inline-flex"
-        >
-          Contato
-          <ArrowUpRight className="size-3.5" aria-hidden="true" />
-        </a>
 
         <button
           type="button"
@@ -98,7 +97,7 @@ export function Navbar() {
               ))}
             </ul>
             <p className="font-mono text-[10px] tracking-[0.28em] text-muted uppercase">
-              {site.location.label}
+              {site.location.city} · {site.role}
             </p>
           </nav>
         </div>

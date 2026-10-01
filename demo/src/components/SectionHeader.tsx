@@ -27,7 +27,7 @@ export function SectionHeader({
         {index} — {label}
       </p>
       {title ? (
-        <h2 className="font-display max-w-3xl text-4xl leading-[0.95] tracking-tight text-balance sm:text-5xl md:text-6xl lg:text-7xl">
+        <h2 className="font-display max-w-5xl text-4xl leading-[0.95] tracking-tight text-balance sm:text-5xl md:text-6xl lg:text-7xl">
           {title}
         </h2>
       ) : null}

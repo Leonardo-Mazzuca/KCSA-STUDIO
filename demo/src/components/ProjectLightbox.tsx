@@ -54,8 +54,8 @@ export function ProjectLightbox({ project, onClose }: ProjectLightboxProps) {
               <p className="mt-4 text-sm text-muted">{project.location}</p>
             ) : null}
             <p className="mt-8 max-w-sm text-sm leading-relaxed text-foreground/70">
-              Registro selecionado do arquivo KCSA. Título, categoria e ano
-              entram aqui quando o projeto for publicado.
+              Uma imagem selecionada do arquivo de Kelvin Carlos. O instante
+              que permanece depois do momento passar.
             </p>
           </div>
           <button

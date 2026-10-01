@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { CustomCursor } from "@/components/layout/CustomCursor";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
@@ -36,7 +35,6 @@ export default function App() {
       <ScrollToHash />
       <SkipLink />
       <ScrollProgress />
-      <CustomCursor />
       <Navbar />
       <SectionRail />
       <Home />

@@ -1,7 +1,6 @@
 /**
- * Trabalhos selecionados.
- * Títulos, categorias, anos e locais são placeholders editáveis.
- * As imagens estão em /public/images.
+ * Trabalhos selecionados — curadoria para o portfólio.
+ * Títulos e metadados podem ser editados aqui.
  */
 export type Project = {
   id: string;
@@ -17,44 +16,88 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    id: "gesto-de-fe",
-    title: "Gesto de fé",
-    category: "Retrato",
-    year: "2025",
-    location: "São Paulo",
-    image: "/images/gesto-de-fe.jpg",
-    alt: "Dois homens de jaleco branco em um momento de emoção, um cobrindo o rosto com a mão",
+    id: "o-olhar",
+    title: "O olhar",
+    category: "Ensaio",
+    year: "2026",
+    image: "/images/retrato-mulher.jpg",
+    alt: "Mulher olha por cima do ombro de um homem de camisa branca, a mão pousada nas costas",
     featured: true,
     layout: "tall",
   },
   {
-    id: "maos-no-ar",
-    title: "Mãos no ar",
-    category: "Documentário",
-    year: "2025",
-    location: "São Paulo",
-    image: "/images/maos-no-ar.jpg",
-    alt: "Crianças com as mãos erguidas contra um fundo escuro",
+    id: "esconderijo",
+    title: "Esconderijo",
+    category: "Retrato",
+    year: "2026",
+    image: "/images/coro-maximo.jpg",
+    alt: "Criança de jaqueta jeans cobre os olhos com a manga, contra um fundo quente",
     featured: true,
-    layout: "wide",
+    layout: "tall",
   },
   {
-    id: "luz-de-ouro",
-    title: "Luz de ouro",
-    category: "Retrato",
-    year: "2025",
-    image: "/images/luz-de-ouro.jpg",
-    alt: "Bebê no colo de um adulto, iluminado por luz de fim de tarde",
+    id: "noiva",
+    title: "Noiva",
+    category: "Casamento",
+    year: "2026",
+    image: "/images/noiva.jpg",
+    alt: "Noiva com véu e buquê de rosas brancas, sorrindo em uma escada iluminada",
     layout: "tall",
   },
   {
     id: "danca",
     title: "Dança",
-    category: "Street",
+    category: "Ensaio",
     year: "2025",
     location: "São Paulo",
-    image: "/images/danca.jpg",
+    image: "/images/casal.jpg",
     alt: "Casal dançando, o homem beija a testa da mulher que sorri de olhos fechados",
+    layout: "tall",
+  },
+  {
+    id: "gesto-de-fe",
+    title: "Gesto de fé",
+    category: "Documentário",
+    year: "2025",
+    location: "São Paulo",
+    image: "/images/batismo.jpg",
+    alt: "Dois homens de jaleco branco em um momento de emoção, um cobrindo o rosto com a mão",
+    layout: "tall",
+  },
+  {
+    id: "presenca",
+    title: "Presença",
+    category: "Evento",
+    year: "2026",
+    image: "/images/igreja.jpg",
+    alt: "Homem canta ao microfone em um palco escuro, iluminado por luz quente",
+    layout: "tall",
+  },
+  {
+    id: "samba",
+    title: "Toque",
+    category: "Documentário",
+    year: "2026",
+    image: "/images/artista-destaque.jpg",
+    alt: "Músico sorri ao tocar um tambor, com microfone em primeiro plano",
+    layout: "tall",
+  },
+  {
+    id: "afeto",
+    title: "Afeto",
+    category: "Família",
+    year: "2026",
+    image: "/images/crianca-1.jpg",
+    alt: "Criança sorri no colo enquanto recebe um beijo no rosto",
+    layout: "tall",
+  },
+  {
+    id: "terra",
+    title: "Terra",
+    category: "Retrato",
+    year: "2026",
+    image: "/images/crianca-3.jpg",
+    alt: "Bebê com o rosto sujo de terra, olhando para o alto",
     layout: "tall",
   },
   {
@@ -67,13 +110,13 @@ export const projects: Project[] = [
     layout: "tall",
   },
   {
-    id: "palco-gesto",
-    title: "Palco",
-    category: "Cena",
+    id: "maos-no-ar",
+    title: "Mãos no ar",
+    category: "Documentário",
     year: "2025",
     location: "São Paulo",
-    image: "/images/palco-gesto.jpg",
-    alt: "Grupo de crianças e jovens no palco, cobrindo o rosto com as mãos",
+    image: "/images/maos-no-ar.jpg",
+    alt: "Crianças com as mãos erguidas contra um fundo escuro",
     layout: "wide",
   },
   {
@@ -85,39 +128,12 @@ export const projects: Project[] = [
     alt: "Dois homens em close, um em primeiro plano de olhos baixos e outro ao microfone",
     layout: "tall",
   },
-  {
-    id: "palco-ensaio",
-    title: "Ensaio",
-    category: "Cena",
-    year: "2025",
-    location: "São Paulo",
-    image: "/images/palco-ensaio.jpg",
-    alt: "Ensaio teatral em palco escuro, pessoas reunidas ao redor de caixas de madeira",
-    layout: "wide",
-  },
-  {
-    id: "biblioteca-samba",
-    title: "Essa Biblioteca dá Samba",
-    category: "Documentário",
-    year: "2025",
-    location: "Sapopemba, SP",
-    image: "/images/biblioteca-samba-grupo.jpg",
-    alt: "Grupo sorrindo em evento cultural da Biblioteca do Samba",
-    layout: "tall",
-  },
-  {
-    id: "biblioteca-samba-banner",
-    title: "Essa Biblioteca dá Samba",
-    category: "Registro",
-    year: "2025",
-    location: "Sapopemba, SP",
-    image: "/images/biblioteca-samba-banner.jpg",
-    alt: "Banner do projeto Essa Biblioteca dá Samba com microfone em silhueta",
-    layout: "tall",
-  },
 ];
 
-export const heroImage = projects[0];
-export const aboutImages = [projects[2], projects[3]];
-export const featuredProject = projects[1];
-export const selectedWork = projects.filter((project) => project.id !== heroImage.id);
+export const instagramImages = [
+  projects[2],
+  projects[5],
+  projects[6],
+  projects[7],
+  projects[3],
+];

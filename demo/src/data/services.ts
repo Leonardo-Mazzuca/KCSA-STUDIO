@@ -1,7 +1,3 @@
-/**
- * Serviços exibidos no site.
- * Inclua, remova ou reordene itens conforme o portfólio real do estúdio.
- */
 export type Service = {
   id: string;
   index: string;
@@ -11,38 +7,45 @@ export type Service = {
 
 export const services: Service[] = [
   {
-    id: "fotografia",
+    id: "ensaios",
     index: "01",
-    title: "Fotografia",
+    title: "Ensaios",
     description:
-      "Retrato, documentário e ensaio com direção de luz e enquadramento.",
+      "Retratos, ensaios individuais, casal, família ou projetos autorais. Uma experiência pensada para traduzir sua personalidade em imagens.",
   },
   {
-    id: "direcao",
+    id: "eventos",
     index: "02",
-    title: "Direção criativa",
+    title: "Eventos",
     description:
-      "Conceito visual, ritmo e presença para projetos que pedem autoria.",
+      "A espontaneidade de cada momento, a energia do ambiente e aqueles detalhes que passam rápido demais para serem percebidos.",
   },
   {
-    id: "producao",
+    id: "casamentos",
     index: "03",
-    title: "Produção visual",
+    title: "Casamentos",
     description:
-      "Do briefing à entrega: set, sequência e curadoria da imagem final.",
+      "Mais do que registrar uma cerimônia, contar a história de um dia inteiro através de emoções, encontros e pequenos detalhes.",
   },
   {
-    id: "conteudo",
+    id: "retratos",
     index: "04",
-    title: "Conteúdo",
+    title: "Retratos",
     description:
-      "Narrativa em imagem para marcas, cultura e projetos autorais.",
+      "Imagens que comunicam presença, personalidade e identidade — seja para uso pessoal ou profissional.",
   },
   {
-    id: "autorais",
+    id: "corporativo",
     index: "05",
-    title: "Projetos personalizados",
+    title: "Corporativo",
     description:
-      "Encomendas sob medida — quando o formato padrão não resolve.",
+      "Fotografia profissional para pessoas, marcas, equipes e empresas que precisam comunicar quem são através da imagem.",
+  },
+  {
+    id: "audiovisual",
+    index: "06",
+    title: "Audiovisual",
+    description:
+      "Além da fotografia, desenvolvo projetos audiovisuais que unem movimento, narrativa, estética e identidade.",
   },
 ];

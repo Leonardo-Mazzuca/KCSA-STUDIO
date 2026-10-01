@@ -3,7 +3,7 @@ import { navigation, sectionHash } from "@/data/navigation";
 import { cn } from "@/lib/utils";
 
 export function SectionRail() {
-  const [active, setActive] = useState(navigation[0]?.href ?? "/demo#inicio");
+  const [active, setActive] = useState(navigation[0]?.href ?? "#inicio");
 
   useEffect(() => {
     const sectionNodes = navigation

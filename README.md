@@ -1,6 +1,6 @@
-# KCSA STUDIO
+# Kelvin Carlos
 
-Portfólio do **KCSA STUDIO**. A demo para o cliente está na pasta `demo/` e é publicada na rota `/demo`.
+Portfólio de **Kelvin Carlos** — fotógrafo e audiovisual. O site de produção está na pasta `demo/` e é publicado na raiz.
 
 ## Local
 
@@ -10,7 +10,7 @@ npm install
 npm run dev
 ```
 
-Abre em `http://localhost:5173/demo`.
+Abre em `http://localhost:5173`. A rota `/demo` redireciona para `/`.
 
 ## Vercel
 
@@ -23,5 +23,3 @@ No painel do projeto:
    - Output Directory: `dist`
 
 O erro `demo/demo/package.json` acontece quando o Root Directory já é `demo` e o Install Command ainda usa `--prefix demo`.
-
-O cliente acessa `https://seu-projeto.vercel.app/demo`.

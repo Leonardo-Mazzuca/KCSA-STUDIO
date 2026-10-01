@@ -1,23 +1,27 @@
 import { About } from "@/components/sections/About";
-import { Contact } from "@/components/sections/Contact";
+import { Closing } from "@/components/sections/Closing";
+import { Differentiator } from "@/components/sections/Differentiator";
+import { FinalCta } from "@/components/sections/FinalCta";
 import { Hero } from "@/components/sections/Hero";
-import { Location } from "@/components/sections/Location";
-import { Manifesto } from "@/components/sections/Manifesto";
-import { Marquee } from "@/components/sections/Marquee";
+import { Included } from "@/components/sections/Included";
+import { Instagram } from "@/components/sections/Instagram";
 import { Portfolio } from "@/components/sections/Portfolio";
 import { Services } from "@/components/sections/Services";
+import { Testimonials } from "@/components/sections/Testimonials";
 
 export function Home() {
   return (
     <main id="conteudo">
       <Hero />
-      <Marquee />
-      <About />
-      <Manifesto />
       <Portfolio />
-      <Location />
+      <About />
+      <Differentiator />
       <Services />
-      <Contact />
+      <Testimonials />
+      <Included />
+      <Instagram />
+      <FinalCta />
+      <Closing />
     </main>
   );
 }
