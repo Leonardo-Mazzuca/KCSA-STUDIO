@@ -10,6 +10,8 @@ type HeroStageProps = {
   scrollProgress: number;
 };
 
+const logoClass = "logo-key h-auto w-[min(56vw,16rem)] md:w-[min(72vw,28rem)]";
+
 function LogoFallback({
   reduced,
   isMobile,
@@ -36,18 +38,17 @@ function LogoFallback({
           alt={site.video.alt}
           width={720}
           height={720}
-          className="h-auto w-[min(56vw,16rem)] md:w-[min(72vw,28rem)]"
+          className={logoClass}
         />
       ) : (
         <video
-          className="h-auto w-[min(56vw,16rem)] md:w-[min(72vw,28rem)]"
+          className={logoClass}
           src={isMobile ? site.video.mobile : site.video.src}
-          poster={site.video.poster}
           muted
           loop
           playsInline
           autoPlay
-          preload="metadata"
+          preload="auto"
           aria-label={site.video.alt}
         />
       )}
@@ -87,7 +88,7 @@ export function HeroStage({ scrollProgress }: HeroStageProps) {
         video.defaultMuted = true;
         video.loop = true;
         video.playsInline = true;
-        video.preload = "metadata";
+        video.preload = "auto";
         video.setAttribute("playsinline", "");
         video.setAttribute("muted", "");
         video.src = profile.isMobile ? site.video.mobile : site.video.src;
@@ -96,7 +97,18 @@ export function HeroStage({ scrollProgress }: HeroStageProps) {
           video?.play().catch(() => undefined);
         };
 
-        window.setTimeout(play, 180);
+        const reveal = () => {
+          if (disposed) return;
+          play();
+          window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(() => {
+              if (!disposed) setReady(true);
+            });
+          });
+        };
+
+        if (video.readyState >= 2) reveal();
+        else video.addEventListener("loadeddata", reveal, { once: true });
 
         scene = createHeroScene(canvasRef.current, video, {
           pixelRatio: profile.pixelRatio,
@@ -107,7 +119,7 @@ export function HeroStage({ scrollProgress }: HeroStageProps) {
           return;
         }
         sceneRef.current = scene;
-        setReady(true);
+        play();
 
         observer = new IntersectionObserver(
           ([entry]) => {
@@ -184,21 +196,25 @@ export function HeroStage({ scrollProgress }: HeroStageProps) {
 
   const showWebGL = Boolean(profile?.useWebGL && !failed);
 
+  const showPoster = !ready && (showWebGL || !profile);
+
   return (
     <div ref={sectionRef} className="absolute inset-0">
-      <img
-        src={site.video.poster}
-        alt=""
-        width={720}
-        height={720}
-        aria-hidden="true"
-        className={`pointer-events-none absolute top-[34%] left-1/2 w-[min(56vw,16rem)] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-700 md:top-1/2 md:w-[min(72vw,28rem)] ${ready ? "opacity-0" : "opacity-80"}`}
-      />
+      {showPoster ? (
+        <img
+          src={site.video.poster}
+          alt=""
+          width={720}
+          height={720}
+          aria-hidden="true"
+          className={`pointer-events-none absolute top-1/2 left-1/2 ${logoClass} -translate-x-1/2 -translate-y-1/2`}
+        />
+      ) : null}
 
       {showWebGL ? (
         <canvas
           ref={canvasRef}
-          className="absolute inset-0 h-full w-full"
+          className={`absolute inset-0 h-full w-full transition-opacity duration-500 ${ready ? "opacity-100" : "opacity-0"}`}
           aria-hidden="true"
         />
       ) : profile ? (

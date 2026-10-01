@@ -130,6 +130,10 @@
   }
 }
 
+.logo-key {
+  mix-blend-mode: screen;
+}
+
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
