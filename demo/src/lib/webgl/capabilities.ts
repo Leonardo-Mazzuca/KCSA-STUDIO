@@ -2,6 +2,7 @@ export type ExperienceProfile = {
   webgl: boolean;
   reducedMotion: boolean;
   isMobile: boolean;
+  isCoarse: boolean;
   lowEnd: boolean;
   useWebGL: boolean;
   pixelRatio: number;
@@ -23,9 +24,8 @@ export function getExperienceProfile(): ExperienceProfile {
   const reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
   ).matches;
-  const isMobile = window.matchMedia(
-    "(max-width: 767px), (pointer: coarse)",
-  ).matches;
+  const isMobile = window.matchMedia("(max-width: 767px)").matches;
+  const isCoarse = window.matchMedia("(pointer: coarse)").matches;
   const connection = (
     navigator as Navigator & {
       connection?: { saveData?: boolean; effectiveType?: string };
@@ -44,6 +44,7 @@ export function getExperienceProfile(): ExperienceProfile {
     webgl,
     reducedMotion,
     isMobile,
+    isCoarse,
     lowEnd,
     useWebGL,
     pixelRatio: isMobile || lowEnd ? 1 : Math.min(window.devicePixelRatio || 1, 1.5),

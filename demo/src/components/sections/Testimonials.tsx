@@ -1,38 +1,56 @@
 import { Reveal } from "@/components/Reveal";
-import { SectionHeader } from "@/components/SectionHeader";
 import { testimonials } from "@/data/testimonials";
 
 export function Testimonials() {
+  const [first, ...rest] = testimonials;
+
   return (
-    <section id="depoimentos" className="px-5 py-16 md:px-8 md:py-28 lg:px-12 lg:py-32">
-      <div className="mb-10 max-w-4xl md:mb-24">
-        <SectionHeader
-          index="06"
-          label="Depoimentos"
-          title="Eles viveram. Eu fotografei. Eles contam."
-        />
-        <p className="mt-8 max-w-md text-base leading-relaxed text-foreground/70">
+    <section id="depoimentos" className="relative mt-20 overflow-hidden md:mt-32">
+      <img
+        src="/images/teatro.jpg"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover opacity-25"
+        style={{ objectPosition: "50% 40%" }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+
+      <div className="relative z-10 px-5 py-20 md:px-10 md:py-32 lg:px-14">
+        <p className="font-mono text-[10px] tracking-[0.36em] text-muted uppercase">
+          06 / Depoimentos
+        </p>
+        <h2 className="font-display mt-5 max-w-[18ch] text-[clamp(2rem,5.5vw,4.6rem)] leading-[0.92] tracking-[-0.04em]">
+          Eles viveram. Eu fotografei. Eles contam.
+        </h2>
+        <p className="mt-6 max-w-md text-sm leading-relaxed text-foreground/65 md:text-base">
           Mais do que mostrar o que eu faço, prefiro deixar falar quem já
           esteve na frente da minha câmera.
         </p>
-      </div>
 
-      <ul className="divide-y divide-foreground/10 border-y border-foreground/10">
-        {testimonials.map((item, index) => (
-          <li key={item.quote} className="py-7 md:py-14">
-            <Reveal delay={index * 0.06}>
-              <blockquote className="grid gap-4 lg:grid-cols-12 lg:items-end lg:gap-8">
-                <p className="font-display text-xl leading-snug tracking-tight text-pretty italic sm:text-3xl md:text-4xl lg:col-span-9">
-                  “{item.quote}”
-                </p>
-                <footer className="font-mono text-[10px] tracking-[0.26em] text-muted uppercase lg:col-span-3 lg:text-right">
-                  — {item.author}
-                </footer>
-              </blockquote>
-            </Reveal>
-          </li>
-        ))}
-      </ul>
+        {first ? (
+          <Reveal>
+            <blockquote className="mt-16 max-w-5xl md:mt-24">
+              <p className="font-display text-[clamp(1.7rem,4.4vw,4.2rem)] leading-[1.05] tracking-tight italic">
+                “{first.quote}”
+              </p>
+            </blockquote>
+          </Reveal>
+        ) : null}
+
+        {rest.length ? (
+          <ul className="mt-16 grid gap-10 md:mt-24 md:grid-cols-2 md:gap-16">
+            {rest.map((item) => (
+              <li key={item.quote}>
+                <blockquote>
+                  <p className="font-display text-2xl leading-snug tracking-tight italic md:text-3xl">
+                    “{item.quote}”
+                  </p>
+                </blockquote>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </div>
     </section>
   );
 }

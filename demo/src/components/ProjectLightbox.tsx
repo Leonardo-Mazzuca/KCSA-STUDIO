@@ -33,37 +33,31 @@ export function ProjectLightbox({ project, onClose }: ProjectLightboxProps) {
       aria-labelledby="projeto-titulo"
       className="fixed inset-0 z-[70] bg-black"
     >
-      <div className="grid h-svh min-h-0 grid-rows-[minmax(0,48svh)_minmax(0,1fr)] md:grid-cols-[minmax(0,1.25fr)_minmax(260px,0.75fr)] md:grid-rows-none">
-        <div className="relative min-h-0 min-w-0 overflow-hidden px-6 py-8 md:px-14 md:py-16">
+      <div className="flex h-svh min-h-0 flex-col">
+        <div className="relative min-h-0 flex-1 overflow-hidden px-4 py-16 md:px-16 md:py-12">
           <img
             src={project.image}
             alt={project.alt}
             className="h-full w-full object-contain"
           />
         </div>
-        <div className="flex min-h-0 flex-col justify-between gap-10 overflow-y-auto border-t border-white/10 px-5 py-8 md:border-t-0 md:border-l md:px-10 md:py-16">
-          <div>
-            <p className="font-mono text-[10px] tracking-[0.28em] text-muted uppercase">
-              {project.category} · {project.year}
+        <div className="flex items-end justify-between gap-6 px-5 py-5 md:px-10 md:py-7">
+          <div className="min-w-0">
+            <p className="font-mono text-[10px] tracking-[0.28em] text-white/50 uppercase">
+              {project.category}
+              {project.location ? ` · ${project.location}` : ""} · {project.year}
             </p>
             <h2
               id="projeto-titulo"
-              className="font-display mt-4 text-3xl tracking-tight md:text-5xl"
+              className="font-display mt-1 truncate text-2xl tracking-tight md:text-4xl"
             >
               {project.title}
             </h2>
-            {project.location ? (
-              <p className="mt-4 text-sm text-muted">{project.location}</p>
-            ) : null}
-            <p className="mt-8 max-w-sm text-sm leading-relaxed text-foreground/70">
-              Uma imagem selecionada do arquivo de Kelvin Carlos. O instante
-              que permanece depois do momento passar.
-            </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="font-mono inline-flex w-fit items-center gap-3 text-[10px] tracking-[0.28em] uppercase"
+            className="font-mono inline-flex shrink-0 items-center gap-3 text-[10px] tracking-[0.28em] uppercase"
           >
             <X className="size-4" aria-hidden="true" />
             Fechar
@@ -74,7 +68,7 @@ export function ProjectLightbox({ project, onClose }: ProjectLightboxProps) {
         type="button"
         aria-label="Fechar projeto"
         onClick={onClose}
-        className="absolute top-4 right-4 z-10 inline-flex size-11 items-center justify-center border border-white/20 bg-black/40 text-white md:top-6 md:right-6"
+        className="absolute top-4 right-4 z-10 inline-flex size-11 items-center justify-center text-white md:top-6 md:right-6"
       >
         <X className="size-4" />
       </button>

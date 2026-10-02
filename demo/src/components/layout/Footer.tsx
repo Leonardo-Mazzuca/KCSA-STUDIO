@@ -2,8 +2,8 @@ import { site } from "@/data/site";
 
 export function Footer() {
   return (
-    <footer className="bg-background border-t border-foreground/10 px-5 py-10 md:px-8 lg:px-12">
-      <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
+    <footer className="px-5 py-10 md:px-10 lg:px-14">
+      <div className="flex flex-col gap-8 border-t border-foreground/10 pt-8 sm:flex-row sm:items-start sm:justify-between">
         <p className="font-mono text-[11px] tracking-[0.34em] uppercase">
           {site.name}
         </p>
@@ -37,7 +37,7 @@ export function Footer() {
         </div>
       </div>
 
-      <p className="mt-8 font-mono text-[10px] tracking-[0.18em] text-muted uppercase md:mt-12">
+      <p className="mt-8 font-mono text-[10px] tracking-[0.18em] text-muted uppercase">
         © {new Date().getFullYear()} {site.name}. Todos os direitos reservados.
       </p>
     </footer>

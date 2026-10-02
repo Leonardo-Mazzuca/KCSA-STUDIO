@@ -1,19 +1,19 @@
 import { MediaFrame } from "@/components/MediaFrame";
 import { Reveal } from "@/components/Reveal";
-import { SectionHeader } from "@/components/SectionHeader";
 import { site } from "@/data/site";
 
 export function About() {
   return (
-    <section id="sobre" className="relative px-5 py-16 md:px-8 md:py-28 lg:px-12 lg:py-32">
-      <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-16">
-        <Reveal className="order-2 lg:order-1 lg:col-span-7 lg:sticky lg:top-28">
-          <SectionHeader
-            index="03"
-            label="Sobre"
-            title="Você já conheceu meu olhar. Agora, conheça quem está por trás dele."
-          />
-          <div className="mt-6 max-w-xl space-y-4 text-base leading-relaxed text-foreground/76 md:mt-10 md:space-y-5">
+    <section id="sobre" className="relative overflow-x-clip pt-20 md:pt-0">
+      <div className="grid items-end lg:grid-cols-12">
+        <Reveal className="relative px-5 md:px-10 lg:col-span-7 lg:px-14 lg:pt-32">
+          <p className="font-mono text-[10px] tracking-[0.36em] text-muted uppercase">
+            03 / Sobre
+          </p>
+          <h2 className="font-display mt-5 max-w-[16ch] text-[clamp(2.1rem,6vw,5.4rem)] leading-[0.9] tracking-[-0.04em]">
+            Você já conheceu meu olhar. Agora, conheça quem está por trás dele.
+          </h2>
+          <div className="mt-8 max-w-md space-y-4 text-base leading-relaxed text-foreground/72 md:mt-12">
             <p>
               Eu sou Kelvin Carlos, fotógrafo e profissional de audiovisual,
               com formação em Produção Audiovisual, Línguas e Fotografia.
@@ -27,23 +27,20 @@ export function About() {
               Viajo para diferentes estados para fotografar pessoas, projetos
               e histórias que merecem ser vistas de um jeito único.
             </p>
-            <p className="font-display text-2xl italic text-foreground">
-              Prazer, Kelvin.
-            </p>
           </div>
         </Reveal>
 
-        <Reveal delay={0.1} className="order-1 lg:order-2 lg:col-span-5">
-          <figure className="mx-auto w-full max-w-xs sm:max-w-sm lg:ml-auto lg:max-w-none">
+        <Reveal delay={0.1} className="relative mt-12 lg:col-span-5 lg:mt-0">
+          <figure className="relative">
             <MediaFrame
               src={site.images.about}
               alt={site.images.aboutAlt}
-              className="aspect-[4/5] w-full"
-              sizes="(min-width: 1024px) 34vw, 80vw"
+              className="aspect-[4/5] w-full md:aspect-[3/4]"
+              sizes="(min-width: 1024px) 42vw, 100vw"
               imgClassName="object-[72%_12%] grayscale"
             />
-            <figcaption className="font-mono mt-4 text-[10px] tracking-[0.22em] text-muted uppercase">
-              {site.name} · {site.location.city}
+            <figcaption className="font-display pointer-events-none absolute right-5 bottom-6 left-5 text-[clamp(2.6rem,8vw,5.5rem)] leading-[0.8] tracking-[-0.04em] text-white italic md:right-8 md:bottom-8">
+              Prazer, Kelvin.
             </figcaption>
           </figure>
         </Reveal>

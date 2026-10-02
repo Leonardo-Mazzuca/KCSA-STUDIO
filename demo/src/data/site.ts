@@ -46,6 +46,11 @@ export const site = {
     differentiator: "/images/casal.jpg",
     differentiatorAlt:
       "Casal dançando, o homem beija a testa da mulher que sorri de olhos fechados",
+    space: [
+      "/images/retrato-mulher.jpg",
+      "/images/casal.jpg",
+      "/images/noiva.jpg",
+    ],
   },
   cta: {
     primary: "Conhecer meu trabalho",

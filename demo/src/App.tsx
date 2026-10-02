@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { StudioCursor } from "@/components/interaction/StudioCursor";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
@@ -35,6 +36,8 @@ export default function App() {
     <>
       <ScrollToHash />
       <SkipLink />
+      <StudioCursor />
+      <div className="film-grain" aria-hidden="true" />
       <ScrollProgress />
       <Navbar />
       <SectionRail />

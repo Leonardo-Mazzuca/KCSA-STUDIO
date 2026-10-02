@@ -1,28 +1,29 @@
 import { services } from "@/data/services";
-import { SectionHeader } from "@/components/SectionHeader";
 
 export function Services() {
   return (
-    <section id="servicos" className="px-5 py-16 md:px-8 md:py-28 lg:px-12 lg:py-32">
-      <div className="mb-10 max-w-4xl md:mb-16">
-        <SectionHeader
-          index="05"
-          label="Serviços"
-          title="O que podemos criar juntos?"
-        />
-      </div>
+    <section id="servicos" className="px-5 pt-24 md:px-10 md:pt-40 lg:px-14">
+      <p className="font-mono text-[10px] tracking-[0.36em] text-muted uppercase">
+        05 / Serviços
+      </p>
+      <h2 className="font-display mt-5 max-w-[14ch] text-[clamp(2.4rem,8vw,7rem)] leading-[0.84] tracking-[-0.05em]">
+        O que podemos criar juntos?
+      </h2>
 
-      <ul className="divide-y divide-foreground/10 border-y border-foreground/10">
+      <ul className="mt-14 md:mt-24">
         {services.map((service) => (
-          <li key={service.id} className="py-1.5 first:pt-2 last:pb-2">
-            <article className="group grid gap-2 rounded-2xl px-4 py-5 transition-colors duration-500 hover:bg-paper hover:text-ink md:grid-cols-12 md:items-baseline md:gap-8 md:rounded-3xl md:px-7 md:py-8">
-              <p className="font-mono text-[10px] tracking-[0.28em] text-muted uppercase transition-colors group-hover:text-ink/50 md:col-span-2">
+          <li
+            key={service.id}
+            className="group border-t border-foreground/10 last:border-b"
+          >
+            <article className="grid gap-3 py-8 md:grid-cols-12 md:items-baseline md:gap-8 md:py-12">
+              <p className="font-mono text-[10px] tracking-[0.28em] text-muted uppercase md:col-span-2">
                 {service.index}
               </p>
-              <h3 className="font-display text-2xl tracking-tight md:col-span-4 md:text-4xl lg:text-5xl">
+              <h3 className="font-display text-3xl tracking-tight transition-all duration-500 group-hover:italic md:col-span-4 md:text-5xl lg:text-6xl">
                 {service.title}
               </h3>
-              <p className="max-w-md text-sm leading-relaxed text-muted transition-colors group-hover:text-ink/70 md:col-span-6 md:text-base">
+              <p className="max-w-md text-sm leading-relaxed text-foreground/62 md:col-span-6 md:text-base">
                 {service.description}
               </p>
             </article>

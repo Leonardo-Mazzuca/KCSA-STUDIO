@@ -101,12 +101,12 @@ export const projects: Project[] = [
     layout: "tall",
   },
   {
-    id: "festa-memoria",
-    title: "Festa e memória",
+    id: "celebracao",
+    title: "Celebração",
     category: "Editorial",
     year: "2025",
-    image: "/images/festa-memoria.jpg",
-    alt: "Menina sorrindo vestida de festa junina, brincando com fubá no chão",
+    image: "/images/celebracao.jpg",
+    alt: "Mulher sorri em um encontro, vista entre as pessoas em primeiro plano",
     layout: "tall",
   },
   {
@@ -115,7 +115,7 @@ export const projects: Project[] = [
     category: "Documentário",
     year: "2025",
     location: "São Paulo",
-    image: "/images/maos-no-ar.jpg",
+    image: "/images/teatro.jpg",
     alt: "Crianças com as mãos erguidas contra um fundo escuro",
     layout: "wide",
   },
@@ -124,16 +124,61 @@ export const projects: Project[] = [
     title: "Voz",
     category: "Performance",
     year: "2025",
-    image: "/images/voz.jpg",
-    alt: "Dois homens em close, um em primeiro plano de olhos baixos e outro ao microfone",
+    image: "/images/artista-2.jpg",
+    alt: "Homem canta ao microfone de perfil, com instrumentos ao fundo",
+    layout: "tall",
+  },
+  {
+    id: "ritmo",
+    title: "Ritmo",
+    category: "Documentário",
+    year: "2026",
+    image: "/images/instrumento.jpg",
+    alt: "Mãos tatuadas tocam um tambor com a marca de uma palma",
+    layout: "tall",
+  },
+  {
+    id: "jorge",
+    title: "Jorge",
+    category: "Família",
+    year: "2026",
+    image: "/images/jorge.jpg",
+    alt: "Bebê sorri sentado entre brinquedos enquanto uma mão oferece um tigre de plástico",
+    layout: "tall",
+  },
+  {
+    id: "festa",
+    title: "Festa",
+    category: "Família",
+    year: "2025",
+    image: "/images/coro.jpg",
+    alt: "Menina vestida de festa junina sorri sentada no chão, brincando com fubá",
+    layout: "tall",
+  },
+  {
+    id: "canto",
+    title: "Canto",
+    category: "Performance",
+    year: "2026",
+    image: "/images/artista.jpg",
+    alt: "Homem de boné canta ao microfone de perfil, com instrumentos ao fundo",
+    layout: "tall",
+  },
+  {
+    id: "sol",
+    title: "Sol",
+    category: "Família",
+    year: "2026",
+    image: "/images/crianca-2.jpg",
+    alt: "Bebê de boné colorido sorri sentado numa toalha ao ar livre",
     layout: "tall",
   },
 ];
 
-export const instagramImages = [
-  projects[2],
-  projects[5],
-  projects[6],
-  projects[7],
-  projects[3],
-];
+export function projectById(id: string) {
+  return projects.find((item) => item.id === id);
+}
+
+export const instagramImages = ["noiva", "presenca", "samba", "afeto", "danca"]
+  .map(projectById)
+  .filter((item): item is Project => Boolean(item));

@@ -1,95 +1,77 @@
-import { useEffect, useRef, useState, type RefObject } from "react";
+import { useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { HeroStage } from "@/components/webgl/HeroStage";
 import { site } from "@/data/site";
-
-function useHeroScroll(sectionRef: RefObject<HTMLElement | null>) {
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const extra = section.offsetHeight - window.innerHeight;
-      if (extra <= 0) {
-        setProgress(0);
-        return;
-      }
-      const next = Math.min(1, Math.max(0, -section.getBoundingClientRect().top / extra));
-      setProgress((current) => (Math.abs(current - next) < 0.002 ? current : next));
-    };
-
-    const onScroll = () => {
-      if (raf) return;
-      raf = window.requestAnimationFrame(update);
-    };
-
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (raf) window.cancelAnimationFrame(raf);
-    };
-  }, [sectionRef]);
-
-  return progress;
-}
+import { useElementProgress } from "@/hooks/useElementProgress";
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const progress = useHeroScroll(sectionRef);
-  const fade = 1 - progress * 0.85;
+  const progress = useElementProgress(sectionRef);
+  const fade = 1 - progress * 0.9;
 
   return (
     <section
       id="inicio"
       ref={sectionRef}
-      className="relative isolate h-svh bg-ink text-foreground md:h-[145svh]"
+      className="relative isolate h-svh overflow-hidden bg-ink text-foreground md:h-[128svh]"
     >
       <div className="sticky top-0 flex h-svh flex-col overflow-hidden">
         <HeroStage scrollProgress={progress} />
 
-        <div
-          className="relative z-10 mt-auto flex w-full flex-col justify-end px-5 pt-24 pb-6 md:px-8 md:pt-28 md:pb-16 lg:px-12"
-          style={{ opacity: fade, transform: `translate3d(0, ${progress * -24}px, 0)` }}
-        >
-          <p className="font-mono mb-3 flex items-center gap-3 text-[10px] tracking-[0.32em] text-white/72 uppercase md:mb-6">
-            <span className="bg-paper inline-block h-4 w-px animate-pulse-line" />
-            {site.role}
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-10 bg-gradient-to-b from-black/80 to-transparent md:h-16" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-32 bg-gradient-to-t from-black via-black/55 to-transparent md:h-48" />
+
+        <div className="relative z-30 flex h-full flex-col px-5 pt-24 pb-6 md:px-10 md:pt-28 md:pb-10 lg:px-14">
+          <p className="font-mono text-[10px] tracking-[0.42em] text-white/55 uppercase">
+            01 / {site.location.city}
           </p>
 
-          <h1 className="font-display max-w-5xl text-[clamp(2.5rem,12vw,3.4rem)] leading-[0.88] tracking-[-0.045em] md:text-[clamp(3.2rem,10vw,7.4rem)]">
-            Kelvin <em className="font-display font-normal italic">Carlos</em>
-          </h1>
+          <div
+            className="mt-auto max-w-5xl"
+            style={{
+              opacity: fade,
+              transform: `translate3d(0, ${progress * -28}px, 0)`,
+            }}
+          >
+            <p className="font-mono mb-3 text-[10px] tracking-[0.36em] text-white/60 uppercase md:mb-4">
+              {site.role}
+            </p>
+            <h1 className="font-display font-light text-[clamp(2.6rem,8vw,7.2rem)] leading-[0.8] tracking-[-0.055em]">
+              Kelvin
+              <span className="block font-normal italic">Carlos</span>
+            </h1>
 
-          <p className="font-display mt-3 max-w-xl text-xl font-normal text-white/90 italic md:mt-6 md:text-3xl">
-            {site.tagline}
-          </p>
-
-          <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:items-center md:mt-10 md:gap-3">
-            <a
-              href="#trabalhos"
-              className="group font-mono inline-flex items-center justify-center gap-3 bg-paper px-5 py-3 text-[10px] tracking-[0.28em] text-ink uppercase transition-colors hover:bg-foreground md:px-6 md:py-3.5"
-            >
-              {site.cta.primary}
-              <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
-            <a
-              href={site.contact.whatsapp}
-              target="_blank"
-              rel="noreferrer"
-              className="group font-mono inline-flex items-center justify-center gap-3 border border-white/35 px-5 py-3 text-[10px] tracking-[0.28em] text-white uppercase transition-colors hover:bg-white hover:text-ink md:px-6 md:py-3.5"
-            >
-              {site.contact.whatsappLabel}
-              <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
+            <div className="mt-5 flex flex-col gap-5 sm:mt-7">
+              <p className="font-display max-w-md text-xl leading-tight text-white/80 italic md:text-3xl">
+                {site.tagline}
+              </p>
+              <div className="flex flex-wrap items-center gap-5 md:gap-8">
+                <a
+                  href="#trabalhos"
+                  className="group font-mono inline-flex items-center gap-3 bg-paper px-5 py-3 text-[10px] tracking-[0.3em] text-ink uppercase transition-colors hover:bg-foreground md:px-6 md:py-3.5"
+                >
+                  {site.cta.primary}
+                  <ArrowUpRight className="size-3.5 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+                <a
+                  href={site.contact.whatsapp}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group font-mono inline-flex items-center gap-3 text-[10px] tracking-[0.3em] text-white/70 uppercase transition-colors hover:text-white"
+                >
+                  {site.contact.whatsappLabel}
+                  <ArrowUpRight className="size-3.5 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
+
+        <div
+          className="pointer-events-none absolute bottom-5 left-1/2 z-30 hidden h-12 w-px origin-top bg-white/40 md:block"
+          style={{ transform: `translateX(-50%) scaleY(${1 - progress})` }}
+          aria-hidden="true"
+        />
       </div>
     </section>
   );

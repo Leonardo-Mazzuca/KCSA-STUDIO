@@ -10,7 +10,34 @@ type HeroStageProps = {
   scrollProgress: number;
 };
 
-const logoClass = "logo-key h-auto w-[min(56vw,16rem)] md:w-[min(72vw,28rem)]";
+const logoClass =
+  "logo-key h-auto w-[min(56vw,16rem)] md:w-[min(68vw,26rem)]";
+
+function Atmosphere() {
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+      <img
+        src={site.images.hero}
+        alt=""
+        className="absolute top-[12%] left-[-18%] h-[58%] w-[58%] object-cover opacity-[0.22] md:left-[-8%] md:w-[38%] md:opacity-[0.28]"
+        style={{ objectPosition: "50% 28%" }}
+      />
+      <img
+        src={site.images.differentiator}
+        alt=""
+        className="absolute right-[-16%] bottom-[8%] hidden h-[46%] w-[42%] object-cover opacity-[0.18] md:block"
+        style={{ objectPosition: "50% 30%" }}
+      />
+      <img
+        src="/images/noiva.jpg"
+        alt=""
+        className="absolute top-[6%] right-[-10%] h-[34%] w-[40%] object-cover opacity-[0.16] md:right-[4%] md:w-[22%]"
+        style={{ objectPosition: "50% 18%" }}
+      />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,5,5,0.35)_55%,#050505_88%)]" />
+    </div>
+  );
+}
 
 function LogoFallback({
   reduced,
@@ -21,8 +48,8 @@ function LogoFallback({
   isMobile: boolean;
   scrollProgress: number;
 }) {
-  const scale = 1 - scrollProgress * 0.18;
-  const lift = scrollProgress * 28;
+  const scale = 1 - scrollProgress * 0.16;
+  const lift = scrollProgress * 24;
 
   return (
     <div
@@ -113,6 +140,7 @@ export function HeroStage({ scrollProgress }: HeroStageProps) {
         scene = createHeroScene(canvasRef.current, video, {
           pixelRatio: profile.pixelRatio,
           mobile: profile.isMobile,
+          photos: profile.isMobile ? [] : [...site.images.space],
         });
         if (disposed) {
           scene.dispose();
@@ -176,7 +204,7 @@ export function HeroStage({ scrollProgress }: HeroStageProps) {
   }, [scrollProgress]);
 
   useEffect(() => {
-    if (!profile?.useWebGL || profile.isMobile || failed) return;
+    if (!profile?.useWebGL || profile.isMobile || profile.isCoarse || failed) return;
 
     const onMove = (event: PointerEvent) => {
       const host = sectionRef.current;
@@ -195,11 +223,13 @@ export function HeroStage({ scrollProgress }: HeroStageProps) {
   }, [failed, profile]);
 
   const showWebGL = Boolean(profile?.useWebGL && !failed);
-
   const showPoster = !ready && (showWebGL || !profile);
+  const showAtmosphere = !showWebGL || !ready || Boolean(profile?.isMobile);
 
   return (
     <div ref={sectionRef} className="absolute inset-0">
+      {showAtmosphere ? <Atmosphere /> : null}
+
       {showPoster ? (
         <img
           src={site.video.poster}
@@ -207,14 +237,14 @@ export function HeroStage({ scrollProgress }: HeroStageProps) {
           width={720}
           height={720}
           aria-hidden="true"
-          className={`pointer-events-none absolute top-1/2 left-1/2 ${logoClass} -translate-x-1/2 -translate-y-1/2`}
+          className={`pointer-events-none absolute top-[42%] left-1/2 ${logoClass} -translate-x-1/2 -translate-y-1/2 md:top-1/2`}
         />
       ) : null}
 
       {showWebGL ? (
         <canvas
           ref={canvasRef}
-          className={`absolute inset-0 h-full w-full transition-opacity duration-500 ${ready ? "opacity-100" : "opacity-0"}`}
+          className={`absolute inset-0 h-full w-full transition-opacity duration-700 ${ready ? "opacity-100" : "opacity-0"}`}
           aria-hidden="true"
         />
       ) : profile ? (
