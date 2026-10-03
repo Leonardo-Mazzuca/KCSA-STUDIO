@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { PhotoPlane } from "@/components/media/PhotoPlane";
 import { PhotoRing } from "@/components/media/PhotoRing";
-import { PhotoScene, StickyBleed } from "@/components/media/PhotoScene";
+import { PhotoScene } from "@/components/media/PhotoScene";
 import { ProjectLightbox } from "@/components/ProjectLightbox";
 import { Reveal } from "@/components/Reveal";
 import { projectById, type Project } from "@/data/projects";
@@ -38,77 +38,65 @@ export function Portfolio() {
 
   return (
     <section id="trabalhos" className="relative">
-      <div className="relative z-10 px-5 pt-20 md:px-10 md:pt-32 lg:px-14">
-        <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-8">
-          <Reveal className="lg:col-span-8">
-            <p className="font-mono text-[10px] tracking-[0.36em] text-muted uppercase">
-              02 / Portfólio
+      <div className="relative z-20 bg-background px-5 pt-24 pb-12 md:px-10 md:pt-32 md:pb-16 lg:px-14">
+        <Reveal>
+          <p className="font-mono text-[10px] tracking-[0.36em] text-muted uppercase">
+            02 / Portfólio
+          </p>
+          <h2 className="font-display mt-5 max-w-[16ch] text-[clamp(2.4rem,7.4vw,6.8rem)] leading-[0.88] font-light tracking-[-0.05em]">
+            O que fica quando o momento passa.
+          </h2>
+          <div className="mt-8 max-w-md space-y-4 text-sm leading-relaxed text-foreground/70 md:mt-10 md:text-base">
+            <p>Cada fotografia aqui carrega um instante que não se repete.</p>
+            <p>
+              Meu trabalho é encontrar aquilo que acontece entre uma pose e
+              outra: o olhar, o gesto, a conexão, a espontaneidade.
             </p>
-            <h2 className="font-display mt-5 max-w-[16ch] text-[clamp(2.4rem,7.4vw,6.8rem)] leading-[0.82] font-light tracking-[-0.05em]">
-              O que fica quando o momento passa.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.08} className="lg:col-span-4 lg:mb-3">
-            <div className="max-w-sm space-y-4 text-sm leading-relaxed text-foreground/70 md:text-base">
-              <p>Cada fotografia aqui carrega um instante que não se repete.</p>
-              <p>
-                Meu trabalho é encontrar aquilo que acontece entre uma pose e
-                outra: o olhar, o gesto, a conexão, a espontaneidade.
-              </p>
-              <a
-                href="#galeria"
-                className="group font-mono mt-2 inline-flex items-center gap-3 text-[10px] tracking-[0.28em] uppercase"
-              >
-                {site.cta.portfolio}
-                <ArrowUpRight className="size-3.5 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-            </div>
-          </Reveal>
-        </div>
+            <a
+              href="#galeria"
+              className="group font-mono mt-2 inline-flex items-center gap-3 text-[10px] tracking-[0.28em] uppercase"
+            >
+              {site.cta.portfolio}
+              <ArrowUpRight className="size-3.5 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          </div>
+        </Reveal>
       </div>
 
-      <div id="galeria" className="relative mt-10 md:-mt-8">
+      <div id="galeria" className="relative">
         {featured ? (
-          <StickyBleed>
-            {(progress) => (
-              <button
-                type="button"
-                onClick={() => setSelected(featured)}
-                data-cursor="image"
-                className="relative block h-full w-full overflow-hidden"
-              >
-                <img
-                  src={featured.image}
-                  alt={featured.alt}
-                  sizes="100vw"
-                  className="h-full w-full object-cover"
-                  style={{
-                    objectPosition: "50% 22%",
-                    transform: `scale(${1.12 - progress * 0.12})`,
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/25" />
-                <div className="absolute inset-x-5 bottom-8 flex items-end justify-between gap-6 md:inset-x-14 md:bottom-12">
-                  <div>
-                    <p className="font-mono text-[10px] tracking-[0.32em] text-white/55 uppercase">
-                      {metaFor(featured)}
-                    </p>
-                    <p className="font-display mt-2 text-4xl tracking-tight text-white md:text-7xl">
-                      {featured.title}
-                    </p>
-                  </div>
-                  <span className="font-mono hidden text-[10px] tracking-[0.28em] text-white/70 uppercase md:inline">
-                    Abrir
-                  </span>
-                </div>
-              </button>
-            )}
-          </StickyBleed>
+          <button
+            type="button"
+            onClick={() => setSelected(featured)}
+            data-cursor="image"
+            className="relative block h-[68svh] w-full overflow-hidden md:h-[78svh]"
+          >
+            <img
+              src={featured.image}
+              alt={featured.alt}
+              sizes="100vw"
+              className="h-full w-full object-cover object-[50%_22%]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/15 to-transparent" />
+            <div className="absolute inset-x-5 bottom-8 flex items-end justify-between gap-6 md:inset-x-10 md:bottom-12 lg:inset-x-14">
+              <div>
+                <p className="font-mono text-[10px] tracking-[0.32em] text-white/55 uppercase">
+                  {metaFor(featured)}
+                </p>
+                <p className="font-display mt-2 text-4xl tracking-tight text-white md:text-7xl">
+                  {featured.title}
+                </p>
+              </div>
+              <span className="font-mono hidden text-[10px] tracking-[0.28em] text-white/70 uppercase md:inline">
+                Abrir
+              </span>
+            </div>
+          </button>
         ) : null}
 
-        <PhotoScene className="relative mt-4 overflow-x-clip px-5 md:mt-0 md:px-0">
+        <PhotoScene className="relative mt-16 overflow-x-clip px-5 md:mt-24 md:px-10 lg:px-14">
           {olhar ? (
-            <div className="w-[86%] md:w-[54vw] md:-ml-8 lg:-ml-12">
+            <div className="w-[86%] md:w-[52%]">
               <PhotoPlane
                 src={olhar.image}
                 alt={olhar.alt}
@@ -117,13 +105,13 @@ export function Portfolio() {
                 tilt
                 className="w-full"
                 imgClassName="aspect-[3/4] object-[50%_26%]"
-                sizes="(min-width: 768px) 54vw, 86vw"
+                sizes="(min-width: 768px) 52vw, 86vw"
                 onOpen={() => setSelected(olhar)}
               />
             </div>
           ) : null}
           {noiva ? (
-            <div className="mt-[-18%] ml-auto w-[68%] md:absolute md:top-[12%] md:right-[6%] md:mt-0 md:w-[24vw]">
+            <div className="mt-8 ml-auto w-[68%] md:absolute md:top-[10%] md:right-10 md:mt-0 md:w-[26%] lg:right-14">
               <PhotoPlane
                 src={noiva.image}
                 alt={noiva.alt}
@@ -133,13 +121,13 @@ export function Portfolio() {
                 intensity={0.9}
                 className="w-full"
                 imgClassName="aspect-[4/5] object-[50%_18%]"
-                sizes="(min-width: 768px) 24vw, 68vw"
+                sizes="(min-width: 768px) 26vw, 68vw"
                 onOpen={() => setSelected(noiva)}
               />
             </div>
           ) : null}
           {voz ? (
-            <div className="mt-10 w-[54%] md:absolute md:bottom-[12%] md:left-[58%] md:mt-0 md:w-[15vw]">
+            <div className="mt-10 w-[54%] md:absolute md:bottom-[8%] md:left-[56%] md:mt-0 md:w-[16%]">
               <PhotoPlane
                 src={voz.image}
                 alt={voz.alt}
@@ -147,7 +135,7 @@ export function Portfolio() {
                 meta={metaFor(voz)}
                 className="w-full"
                 imgClassName="aspect-[3/4] object-[50%_20%]"
-                sizes="(min-width: 768px) 15vw, 54vw"
+                sizes="(min-width: 768px) 16vw, 54vw"
                 onOpen={() => setSelected(voz)}
               />
             </div>
@@ -156,7 +144,7 @@ export function Portfolio() {
 
         {danca ? (
           <Reveal>
-            <div className="mt-6 md:mt-0">
+            <div className="mt-16 md:mt-24">
               <PhotoPlane
                 src={danca.image}
                 alt={danca.alt}
@@ -172,32 +160,32 @@ export function Portfolio() {
           </Reveal>
         ) : null}
 
-        <div className="relative mt-10 grid items-start gap-6 px-5 md:mt-16 md:grid-cols-12 md:gap-0 md:px-10 lg:px-14">
+        <div className="relative mt-16 grid items-start gap-8 px-5 md:mt-24 md:grid-cols-2 md:gap-10 md:px-10 lg:px-14">
           {fe ? (
-            <Reveal className="md:col-span-6 md:pt-10">
+            <Reveal>
               <PhotoPlane
                 src={fe.image}
                 alt={fe.alt}
                 caption={fe.title}
                 meta={metaFor(fe)}
                 tilt
-                className="w-full md:w-[92%]"
+                className="w-full"
                 imgClassName="aspect-[3/4] object-[50%_18%]"
-                sizes="(min-width: 768px) 42vw, 100vw"
+                sizes="(min-width: 768px) 44vw, 100vw"
                 onOpen={() => setSelected(fe)}
               />
             </Reveal>
           ) : null}
           {presenca ? (
-            <Reveal delay={0.08} className="md:col-span-6 md:-mt-16">
+            <Reveal delay={0.08} className="md:pt-16">
               <PhotoPlane
                 src={presenca.image}
                 alt={presenca.alt}
                 caption={presenca.title}
                 meta={metaFor(presenca)}
-                className="ml-auto w-[86%] md:w-full"
+                className="w-full"
                 imgClassName="aspect-[3/4] object-[50%_16%]"
-                sizes="(min-width: 768px) 42vw, 86vw"
+                sizes="(min-width: 768px) 44vw, 86vw"
                 onOpen={() => setSelected(presenca)}
               />
             </Reveal>

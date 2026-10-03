@@ -7,6 +7,7 @@ import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { SectionRail } from "@/components/layout/SectionRail";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
+import { onHashLinkClick, smoothScrollTo } from "@/lib/scroll";
 import { Home } from "@/pages/Home";
 
 function ScrollToHash() {
@@ -15,11 +16,8 @@ function ScrollToHash() {
   useEffect(() => {
     const frame = window.setTimeout(() => {
       if (hash) {
-        const target = document.querySelector(hash);
-        if (target) {
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
-          return;
-        }
+        smoothScrollTo(hash);
+        return;
       }
 
       window.scrollTo({ top: 0, left: 0 });
@@ -31,10 +29,20 @@ function ScrollToHash() {
   return null;
 }
 
+function SmoothHashLinks() {
+  useEffect(() => {
+    document.addEventListener("click", onHashLinkClick);
+    return () => document.removeEventListener("click", onHashLinkClick);
+  }, []);
+
+  return null;
+}
+
 export default function App() {
   return (
     <>
       <ScrollToHash />
+      <SmoothHashLinks />
       <SkipLink />
       <StudioCursor />
       <div className="film-grain" aria-hidden="true" />

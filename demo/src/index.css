@@ -77,9 +77,18 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     background: var(--color-background);
     overflow-x: hidden;
+  }
+
+  #inicio,
+  #trabalhos,
+  #galeria,
+  #sobre,
+  #servicos,
+  #contato {
+    scroll-margin-top: 5.5rem;
   }
 
   body {
