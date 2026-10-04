@@ -51,6 +51,12 @@ export const site = {
       "/images/casal.jpg",
       "/images/noiva.jpg",
     ],
+    before: "/images/antes.jpg",
+    beforeAlt:
+      "Retrato sem tratamento: mulher olha por cima do ombro de um homem de camisa branca",
+    after: "/images/depois.jpg",
+    afterAlt:
+      "O mesmo retrato depois do tratamento de cor e luz",
   },
   cta: {
     primary: "Conhecer meu trabalho",

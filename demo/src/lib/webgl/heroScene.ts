@@ -269,6 +269,7 @@ export function createHeroScene(
   let visible = true;
   let raf = 0;
   let autoTime = 0;
+  let logoFade = 0;
   let last = performance.now();
 
   const setSize = () => {
@@ -290,6 +291,7 @@ export function createHeroScene(
 
     if (video.readyState >= 2) {
       videoTexture.needsUpdate = true;
+      logoFade = Math.min(1, logoFade + delta * 3.4);
     }
 
     const autoX = Math.sin(autoTime * 0.28) * 0.038;
@@ -313,7 +315,7 @@ export function createHeroScene(
     const scale = 1 - retreat * 0.22;
     plate.scale.set(plateSize * scale, plateSize * scale, 1);
     glow.scale.set(plateSize * 1.62 * scale, plateSize * 1.62 * scale, 1);
-    material.uniforms.uOpacity.value = 1 - retreat * 0.55;
+    material.uniforms.uOpacity.value = logoFade * (1 - retreat * 0.55);
     glowMaterial.uniforms.uOpacity.value = 0.72 * (1 - retreat * 0.75);
     camera.position.z = (options.mobile ? 3.9 : 3.28) + retreat * 0.85;
 

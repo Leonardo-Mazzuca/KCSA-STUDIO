@@ -48,6 +48,7 @@ function LogoFallback({
   isMobile: boolean;
   scrollProgress: number;
 }) {
+  const [visible, setVisible] = useState(false);
   const scale = 1 - scrollProgress * 0.16;
   const lift = scrollProgress * 24;
 
@@ -56,7 +57,7 @@ function LogoFallback({
       className="absolute inset-0 grid place-items-center"
       style={{
         transform: `translate3d(0, ${-lift}px, 0) scale(${scale})`,
-        opacity: 1 - scrollProgress * 0.45,
+        opacity: visible ? 1 - scrollProgress * 0.45 : 0,
       }}
     >
       {reduced ? (
@@ -66,6 +67,7 @@ function LogoFallback({
           width={720}
           height={720}
           className={logoClass}
+          onLoad={() => setVisible(true)}
         />
       ) : (
         <video
@@ -77,6 +79,7 @@ function LogoFallback({
           autoPlay
           preload="auto"
           aria-label={site.video.alt}
+          onLoadedData={() => setVisible(true)}
         />
       )}
     </div>
@@ -124,19 +127,6 @@ export function HeroStage({ scrollProgress }: HeroStageProps) {
           video?.play().catch(() => undefined);
         };
 
-        const reveal = () => {
-          if (disposed) return;
-          play();
-          window.requestAnimationFrame(() => {
-            window.requestAnimationFrame(() => {
-              if (!disposed) setReady(true);
-            });
-          });
-        };
-
-        if (video.readyState >= 2) reveal();
-        else video.addEventListener("loadeddata", reveal, { once: true });
-
         scene = createHeroScene(canvasRef.current, video, {
           pixelRatio: profile.pixelRatio,
           mobile: profile.isMobile,
@@ -147,6 +137,28 @@ export function HeroStage({ scrollProgress }: HeroStageProps) {
           return;
         }
         sceneRef.current = scene;
+        scene.resize();
+
+        let revealed = false;
+        const reveal = () => {
+          if (disposed || revealed) return;
+          revealed = true;
+          scene?.resize();
+          window.requestAnimationFrame(() => {
+            scene?.resize();
+            window.requestAnimationFrame(() => {
+              if (!disposed) setReady(true);
+            });
+          });
+        };
+
+        if (typeof video.requestVideoFrameCallback === "function") {
+          video.requestVideoFrameCallback(() => reveal());
+        } else {
+          video.addEventListener("playing", reveal, { once: true });
+          video.addEventListener("loadeddata", reveal, { once: true });
+        }
+
         play();
 
         observer = new IntersectionObserver(
@@ -172,10 +184,13 @@ export function HeroStage({ scrollProgress }: HeroStageProps) {
 
         const onResize = () => scene?.resize();
         window.addEventListener("resize", onResize, { passive: true });
+        const resizeObserver = new ResizeObserver(() => scene?.resize());
+        resizeObserver.observe(canvasRef.current);
 
         cleanupExtras = () => {
           document.removeEventListener("visibilitychange", onVisibility);
           window.removeEventListener("resize", onResize);
+          resizeObserver.disconnect();
         };
       } catch {
         setFailed(true);
@@ -223,23 +238,11 @@ export function HeroStage({ scrollProgress }: HeroStageProps) {
   }, [failed, profile]);
 
   const showWebGL = Boolean(profile?.useWebGL && !failed);
-  const showPoster = !ready && (showWebGL || !profile);
   const showAtmosphere = !showWebGL || !ready || Boolean(profile?.isMobile);
 
   return (
     <div ref={sectionRef} className="absolute inset-0">
       {showAtmosphere ? <Atmosphere /> : null}
-
-      {showPoster ? (
-        <img
-          src={site.video.poster}
-          alt=""
-          width={720}
-          height={720}
-          aria-hidden="true"
-          className={`pointer-events-none absolute top-[42%] left-1/2 ${logoClass} -translate-x-1/2 -translate-y-1/2 md:top-1/2`}
-        />
-      ) : null}
 
       {showWebGL ? (
         <canvas
