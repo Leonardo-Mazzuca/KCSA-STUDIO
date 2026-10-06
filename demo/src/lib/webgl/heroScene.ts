@@ -169,8 +169,6 @@ export function createHeroScene(
     world.add(dust);
   }
 
-  let pointerX = 0;
-  let pointerY = 0;
   let targetX = 0;
   let targetY = 0;
   let scroll = 0;
@@ -241,8 +239,6 @@ export function createHeroScene(
 
   return {
     setPointer(x, y) {
-      pointerX = x;
-      pointerY = y;
       targetY = x * 0.11;
       targetX = -y * 0.055;
     },
