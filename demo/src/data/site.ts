@@ -40,16 +40,17 @@ export const site = {
     closing: "/images/kelvin-ensaio.jpg",
     closingAlt:
       "Kelvin Carlos em um ambiente escuro, fotografando com o celular à frente do rosto",
-    hero: "/images/retrato-mulher.jpg",
+    hero: "/images/casal-pb.jpg",
     heroAlt:
-      "Mulher olha por cima do ombro de um homem de camisa branca, a mão pousada nas costas",
-    differentiator: "/images/casal.jpg",
+      "Casal dança em preto e branco: o homem beija o rosto da mulher, que sorri de olhos fechados",
+    differentiator: "/images/avos.jpg",
     differentiatorAlt:
-      "Casal dançando, o homem beija a testa da mulher que sorri de olhos fechados",
+      "Casal de idosos sentados em cadeiras de plástico à sombra de palmeiras",
+    testimonials: "/images/oficina-teatro.jpg",
     space: [
-      "/images/retrato-mulher.jpg",
-      "/images/casal.jpg",
-      "/images/noiva.jpg",
+      "/images/casal-pb.jpg",
+      "/images/duo.jpg",
+      "/images/palco.jpg",
     ],
     before: "/images/antes.jpg",
     beforeAlt:

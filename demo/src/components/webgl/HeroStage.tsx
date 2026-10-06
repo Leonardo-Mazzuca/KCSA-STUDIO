@@ -17,22 +17,22 @@ function Atmosphere() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
       <img
-        src={site.images.hero}
+        src={site.images.space[0]}
         alt=""
         className="absolute top-[12%] left-[-18%] h-[58%] w-[58%] object-cover opacity-[0.22] md:left-[-8%] md:w-[38%] md:opacity-[0.28]"
-        style={{ objectPosition: "50% 28%" }}
+        style={{ objectPosition: "50% 22%" }}
       />
       <img
-        src={site.images.differentiator}
+        src={site.images.space[1]}
         alt=""
         className="absolute right-[-16%] bottom-[8%] hidden h-[46%] w-[42%] object-cover opacity-[0.18] md:block"
-        style={{ objectPosition: "50% 30%" }}
+        style={{ objectPosition: "50% 18%" }}
       />
       <img
-        src="/images/noiva.jpg"
+        src={site.images.space[2]}
         alt=""
         className="absolute top-[6%] right-[-10%] h-[34%] w-[40%] object-cover opacity-[0.16] md:right-[4%] md:w-[22%]"
-        style={{ objectPosition: "50% 18%" }}
+        style={{ objectPosition: "50% 40%" }}
       />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,5,5,0.35)_55%,#050505_88%)]" />
     </div>

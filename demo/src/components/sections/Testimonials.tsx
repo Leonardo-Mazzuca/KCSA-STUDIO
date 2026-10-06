@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/Reveal";
+import { site } from "@/data/site";
 import { testimonials } from "@/data/testimonials";
 
 export function Testimonials() {
@@ -7,7 +8,7 @@ export function Testimonials() {
   return (
     <section id="depoimentos" className="relative mt-20 overflow-hidden md:mt-32">
       <img
-        src="/images/teatro.jpg"
+        src={site.images.testimonials}
         alt=""
         aria-hidden="true"
         className="absolute inset-0 h-full w-full object-cover opacity-25"

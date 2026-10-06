@@ -173,12 +173,68 @@ export const projects: Project[] = [
     alt: "Bebê de boné colorido sorri sentado numa toalha ao ar livre",
     layout: "tall",
   },
+  {
+    id: "clareza",
+    title: "Clareza",
+    category: "Ensaio",
+    year: "2026",
+    image: "/images/retrato-pb.jpg",
+    alt: "Retrato em preto e branco de uma mulher com faixa no cabelo, olhando de lado",
+    layout: "tall",
+  },
+  {
+    id: "mestre",
+    title: "Mestre",
+    category: "Retrato",
+    year: "2026",
+    image: "/images/avo.jpg",
+    alt: "Homem idoso de chapéu xadrez e camisa azul, sentado à sombra de uma palmeira",
+    layout: "tall",
+  },
+  {
+    id: "colo",
+    title: "Colo",
+    category: "Família",
+    year: "2026",
+    image: "/images/colo-sol.jpg",
+    alt: "Bebê no colo de um homem, iluminado pelo sol da tarde",
+    layout: "tall",
+  },
 ];
 
 export function projectById(id: string) {
   return projects.find((item) => item.id === id);
 }
 
-export const instagramImages = ["noiva", "presenca", "samba", "afeto", "danca"]
-  .map(projectById)
-  .filter((item): item is Project => Boolean(item));
+export const instagramImages = [
+  {
+    id: "piscina",
+    title: "Piscina",
+    image: "/images/piscina.jpg",
+    alt: "Duas mulheres se olham e sorriem dentro de uma piscina, com outras pessoas ao fundo",
+  },
+  {
+    id: "grafite",
+    title: "Grafite",
+    image: "/images/grafite.jpg",
+    alt: "Mãos pintam um muro colorido com spray, ao ar livre",
+  },
+  {
+    id: "trancas",
+    title: "Tranças",
+    image: "/images/trancas.jpg",
+    alt: "Menino de perfil com tranças e a pele molhada, em um pátio ao fundo",
+  },
+  {
+    id: "encontro",
+    title: "Encontro",
+    image: "/images/samba-equipe.jpg",
+    alt: "Grupo sorri junto em um espaço iluminado por luzes quentes",
+  },
+  {
+    id: "brasa",
+    title: "Brasa",
+    image: "/images/retrato-sol.jpg",
+    alt: "Retrato de uma jovem de cabelo cacheado, corrente prateada e luz dourada no rosto",
+  },
+];

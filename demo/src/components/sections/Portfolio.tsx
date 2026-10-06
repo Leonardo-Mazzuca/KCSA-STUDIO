@@ -18,12 +18,15 @@ export function Portfolio() {
   const olhar = projectById("o-olhar");
   const noiva = projectById("noiva");
   const danca = projectById("danca");
+  const clareza = projectById("clareza");
   const fe = projectById("gesto-de-fe");
   const presenca = projectById("presenca");
   const samba = projectById("samba");
   const maos = projectById("maos-no-ar");
   const voz = projectById("voz");
   const strip = [
+    "mestre",
+    "colo",
     "afeto",
     "terra",
     "celebracao",
@@ -160,6 +163,26 @@ export function Portfolio() {
                 sizes="100vw"
                 onOpen={() => setSelected(danca)}
               />
+            </div>
+          </Reveal>
+        ) : null}
+
+        {clareza ? (
+          <Reveal>
+            <div className="mt-16 px-5 md:mt-24 md:px-10 lg:px-14">
+              <div className="w-[86%] md:w-[46%]">
+                <PhotoPlane
+                  src={clareza.image}
+                  alt={clareza.alt}
+                  caption={clareza.title}
+                  meta={metaFor(clareza)}
+                  tilt
+                  className="w-full"
+                  imgClassName="aspect-[4/5] object-[50%_18%]"
+                  sizes="(min-width: 768px) 46vw, 86vw"
+                  onOpen={() => setSelected(clareza)}
+                />
+              </div>
             </div>
           </Reveal>
         ) : null}
