@@ -11,9 +11,12 @@ export type ExperienceProfile = {
 function detectWebGL() {
   try {
     const canvas = document.createElement("canvas");
+    const options = { failIfMajorPerformanceCaveat: true, alpha: true };
     const gl =
-      canvas.getContext("webgl2", { failIfMajorPerformanceCaveat: true }) ??
-      canvas.getContext("webgl", { failIfMajorPerformanceCaveat: true });
+      canvas.getContext("webgl2", options) ??
+      canvas.getContext("webgl", options) ??
+      canvas.getContext("webgl2") ??
+      canvas.getContext("webgl");
     return Boolean(gl);
   } catch {
     return false;

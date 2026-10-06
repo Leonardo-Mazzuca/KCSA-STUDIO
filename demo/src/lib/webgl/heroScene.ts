@@ -1,8 +1,6 @@
 import {
-  AdditiveBlending,
   BufferAttribute,
   BufferGeometry,
-  CanvasTexture,
   Color,
   Group,
   LinearFilter,
@@ -16,8 +14,6 @@ import {
   SRGBColorSpace,
   Texture,
   TextureLoader,
-  Vector2,
-  VideoTexture,
   WebGLRenderer,
 } from "three";
 
@@ -54,24 +50,6 @@ const vertex = /* glsl */ `
   }
 `;
 
-const logoFragment = /* glsl */ `
-  uniform sampler2D uMap;
-  uniform vec2 uLight;
-  uniform float uOpacity;
-  varying vec2 vUv;
-
-  void main() {
-    vec4 color = texture2D(uMap, vUv);
-    float luma = dot(color.rgb, vec3(0.299, 0.587, 0.114));
-    float alpha = smoothstep(0.035, 0.16, luma) * uOpacity;
-
-    vec2 offset = vUv - 0.5 - uLight * 0.12;
-    float sheen = pow(max(0.0, 1.0 - length(offset) * 1.75), 7.0) * 0.12;
-
-    gl_FragColor = vec4(color.rgb + sheen, alpha);
-  }
-`;
-
 const photoFragment = /* glsl */ `
   uniform sampler2D uMap;
   uniform float uDark;
@@ -92,26 +70,8 @@ const photoLayouts = [
   { x: 0.2, y: -0.82, z: -3.05, sx: 1.85, sy: 1.15, ry: 0.05, dark: 0.18, opacity: 0.28, spreadX: 0.18, spreadY: -0.5 },
 ];
 
-function createGlowTexture() {
-  const canvas = document.createElement("canvas");
-  canvas.width = 256;
-  canvas.height = 256;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return new CanvasTexture(canvas);
-  const gradient = ctx.createRadialGradient(128, 128, 8, 128, 128, 128);
-  gradient.addColorStop(0, "rgba(255,255,255,0.3)");
-  gradient.addColorStop(0.38, "rgba(255,255,255,0.08)");
-  gradient.addColorStop(1, "rgba(255,255,255,0)");
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, 256, 256);
-  const texture = new CanvasTexture(canvas);
-  texture.colorSpace = SRGBColorSpace;
-  return texture;
-}
-
 export function createHeroScene(
   canvas: HTMLCanvasElement,
-  video: HTMLVideoElement,
   options: SceneOptions,
 ): HeroSceneHandle {
   let disposed = false;
@@ -129,65 +89,13 @@ export function createHeroScene(
     powerPreference: options.mobile ? "low-power" : "default",
     stencil: false,
     depth: !options.mobile,
+    premultipliedAlpha: true,
   });
-  renderer.setClearColor(0x050505, 0);
+  renderer.setClearColor(0x000000, 0);
   renderer.setPixelRatio(options.pixelRatio);
   renderer.outputColorSpace = SRGBColorSpace;
 
-  const videoTexture = new VideoTexture(video);
-  videoTexture.colorSpace = SRGBColorSpace;
-  videoTexture.minFilter = LinearFilter;
-  videoTexture.magFilter = LinearFilter;
-  videoTexture.generateMipmaps = false;
-
   const geometry = new PlaneGeometry(1, 1, 1, 1);
-  const material = new ShaderMaterial({
-    uniforms: {
-      uMap: { value: videoTexture },
-      uLight: { value: new Vector2(0, 0) },
-      uOpacity: { value: 1 },
-    },
-    vertexShader: vertex,
-    fragmentShader: logoFragment,
-    transparent: true,
-    depthWrite: false,
-  });
-
-  const plate = new Mesh(geometry, material);
-  const plateSize = options.mobile ? 0.82 : 1.18;
-  plate.scale.set(plateSize, plateSize, 1);
-  plate.position.x = options.mobile ? 0 : -0.12;
-  plate.position.y = options.mobile ? 0.42 : 0.34;
-  plate.position.z = 0.42;
-  plate.renderOrder = 2;
-  world.add(plate);
-
-  const glowTexture = createGlowTexture();
-  const glowMaterial = new ShaderMaterial({
-    uniforms: {
-      uMap: { value: glowTexture },
-      uOpacity: { value: 0.72 },
-    },
-    vertexShader: vertex,
-    fragmentShader: /* glsl */ `
-      uniform sampler2D uMap;
-      uniform float uOpacity;
-      varying vec2 vUv;
-      void main() {
-        vec4 color = texture2D(uMap, vUv);
-        gl_FragColor = vec4(color.rgb, color.a * uOpacity);
-      }
-    `,
-    transparent: true,
-    depthWrite: false,
-    blending: AdditiveBlending,
-  });
-  const glow = new Mesh(geometry, glowMaterial);
-  glow.position.z = 0.2;
-  glow.position.y = plate.position.y;
-  glow.scale.set(plateSize * 1.62, plateSize * 1.62, 1);
-  glow.renderOrder = 1;
-  world.add(glow);
 
   const photoLayers: PhotoLayer[] = [];
   const photoMaterials: ShaderMaterial[] = [];
@@ -269,7 +177,6 @@ export function createHeroScene(
   let visible = true;
   let raf = 0;
   let autoTime = 0;
-  let logoFade = 0;
   let last = performance.now();
 
   const setSize = () => {
@@ -289,11 +196,6 @@ export function createHeroScene(
     last = now;
     autoTime += delta;
 
-    if (video.readyState >= 2) {
-      videoTexture.needsUpdate = true;
-      logoFade = Math.min(1, logoFade + delta * 3.4);
-    }
-
     const autoX = Math.sin(autoTime * 0.28) * 0.038;
     const autoY = Math.cos(autoTime * 0.21) * 0.02;
     const nextY = targetY + autoX;
@@ -302,21 +204,8 @@ export function createHeroScene(
     world.rotation.y += (nextY - world.rotation.y) * 0.045;
     world.rotation.x += (nextX - world.rotation.x) * 0.045;
 
-    plate.rotation.y += (pointerY * 0.06 - plate.rotation.y) * 0.05;
-    plate.rotation.x += (-pointerX * 0.035 - plate.rotation.x) * 0.05;
-    glow.rotation.copy(plate.rotation);
-
     const retreat = scroll;
     world.position.z = -retreat * 1.15;
-    plate.position.z = 0.35 - retreat * 0.55;
-    plate.position.y = (options.mobile ? 0.42 : 0.34) + retreat * 0.08;
-    glow.position.z = 0.2 - retreat * 0.55;
-    glow.position.y = plate.position.y;
-    const scale = 1 - retreat * 0.22;
-    plate.scale.set(plateSize * scale, plateSize * scale, 1);
-    glow.scale.set(plateSize * 1.62 * scale, plateSize * 1.62 * scale, 1);
-    material.uniforms.uOpacity.value = logoFade * (1 - retreat * 0.55);
-    glowMaterial.uniforms.uOpacity.value = 0.72 * (1 - retreat * 0.75);
     camera.position.z = (options.mobile ? 3.9 : 3.28) + retreat * 0.85;
 
     for (const layer of photoLayers) {
@@ -333,7 +222,6 @@ export function createHeroScene(
       dust.material.opacity = 0.28 * (1 - retreat * 0.7);
     }
 
-    material.uniforms.uLight.value.set(pointerY, pointerX);
     renderer.render(scene, camera);
   };
 
@@ -380,10 +268,6 @@ export function createHeroScene(
         dust.material.dispose();
       }
       geometry.dispose();
-      material.dispose();
-      glowMaterial.dispose();
-      videoTexture.dispose();
-      glowTexture.dispose();
       renderer.dispose();
       renderer.forceContextLoss();
     },
