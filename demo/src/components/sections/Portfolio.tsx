@@ -95,51 +95,55 @@ export function Portfolio() {
         ) : null}
 
         <PhotoScene className="relative mt-16 overflow-x-clip px-5 md:mt-24 md:px-10 lg:px-14">
-          {olhar ? (
-            <div className="w-[86%] md:w-[52%]">
-              <PhotoPlane
-                src={olhar.image}
-                alt={olhar.alt}
-                caption={olhar.title}
-                meta={metaFor(olhar)}
-                tilt
-                className="w-full"
-                imgClassName="aspect-[3/4] object-[50%_26%]"
-                sizes="(min-width: 768px) 52vw, 86vw"
-                onOpen={() => setSelected(olhar)}
-              />
+          <div className="grid items-start gap-10 md:grid-cols-12 md:gap-x-12">
+            {olhar ? (
+              <div className="md:col-span-7">
+                <PhotoPlane
+                  src={olhar.image}
+                  alt={olhar.alt}
+                  caption={olhar.title}
+                  meta={metaFor(olhar)}
+                  tilt
+                  className="w-full"
+                  imgClassName="aspect-[3/4] object-[50%_26%]"
+                  sizes="(min-width: 768px) 52vw, 86vw"
+                  onOpen={() => setSelected(olhar)}
+                />
+              </div>
+            ) : null}
+            <div className="flex flex-col gap-10 md:col-span-5 md:gap-14 md:pt-10 lg:pt-16">
+              {noiva ? (
+                <div className="ml-auto w-[72%] md:ml-0 md:w-full">
+                  <PhotoPlane
+                    src={noiva.image}
+                    alt={noiva.alt}
+                    caption={noiva.title}
+                    meta={metaFor(noiva)}
+                    tilt
+                    intensity={0.9}
+                    className="w-full"
+                    imgClassName="aspect-[4/5] object-[50%_18%]"
+                    sizes="(min-width: 768px) 38vw, 72vw"
+                    onOpen={() => setSelected(noiva)}
+                  />
+                </div>
+              ) : null}
+              {voz ? (
+                <div className="w-[62%] md:w-[78%]">
+                  <PhotoPlane
+                    src={voz.image}
+                    alt={voz.alt}
+                    caption={voz.title}
+                    meta={metaFor(voz)}
+                    className="w-full"
+                    imgClassName="aspect-[3/4] object-[50%_20%]"
+                    sizes="(min-width: 768px) 28vw, 62vw"
+                    onOpen={() => setSelected(voz)}
+                  />
+                </div>
+              ) : null}
             </div>
-          ) : null}
-          {noiva ? (
-            <div className="mt-8 ml-auto w-[68%] md:absolute md:top-[10%] md:right-10 md:mt-0 md:w-[26%] lg:right-14">
-              <PhotoPlane
-                src={noiva.image}
-                alt={noiva.alt}
-                caption={noiva.title}
-                meta={metaFor(noiva)}
-                tilt
-                intensity={0.9}
-                className="w-full"
-                imgClassName="aspect-[4/5] object-[50%_18%]"
-                sizes="(min-width: 768px) 26vw, 68vw"
-                onOpen={() => setSelected(noiva)}
-              />
-            </div>
-          ) : null}
-          {voz ? (
-            <div className="mt-10 w-[54%] md:absolute md:bottom-[8%] md:left-[56%] md:mt-0 md:w-[16%]">
-              <PhotoPlane
-                src={voz.image}
-                alt={voz.alt}
-                caption={voz.title}
-                meta={metaFor(voz)}
-                className="w-full"
-                imgClassName="aspect-[3/4] object-[50%_20%]"
-                sizes="(min-width: 768px) 16vw, 54vw"
-                onOpen={() => setSelected(voz)}
-              />
-            </div>
-          ) : null}
+          </div>
         </PhotoScene>
 
         {danca ? (
