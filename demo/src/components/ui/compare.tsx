@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
@@ -36,6 +37,7 @@ export function Compare({
   onInteract,
 }: CompareProps) {
   const [sliderXPercent, setSliderXPercent] = useState(initialSliderPercentage);
+  const [live, setLive] = useState(Boolean(autoplay));
   const dragging = useRef(false);
   const frame = useRef(0);
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -53,7 +55,7 @@ export function Compare({
   }, []);
 
   useEffect(() => {
-    if (!autoplay) return;
+    if (!live) return;
     const started = performance.now();
 
     const tick = (now: number) => {
@@ -61,13 +63,13 @@ export function Compare({
       const cycle = autoplayDuration * 2;
       const progress = ((now - started) % cycle) / autoplayDuration;
       const percentage = progress <= 1 ? progress * 100 : (2 - progress) * 100;
-      setSliderXPercent(percentage);
+      setSliderXPercent(8 + percentage * 0.84);
       frame.current = window.requestAnimationFrame(tick);
     };
 
     frame.current = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(frame.current);
-  }, [autoplay, autoplayDuration]);
+  }, [autoplayDuration, live]);
 
   useEffect(() => {
     const onMove = (event: PointerEvent) => {
@@ -103,11 +105,13 @@ export function Compare({
       onKeyDown={(event) => {
         if (event.key === "ArrowLeft") {
           event.preventDefault();
+          setLive(false);
           onInteract?.();
           setSliderXPercent((value) => Math.max(0, value - 4));
         }
         if (event.key === "ArrowRight") {
           event.preventDefault();
+          setLive(false);
           onInteract?.();
           setSliderXPercent((value) => Math.min(100, value + 4));
         }
@@ -115,6 +119,7 @@ export function Compare({
       onPointerDown={(event) => {
         if (event.button !== 0) return;
         dragging.current = true;
+        setLive(false);
         onInteract?.();
         setFromClientX(event.clientX);
         event.currentTarget.setPointerCapture(event.pointerId);
@@ -157,16 +162,18 @@ export function Compare({
       ) : null}
 
       <motion.div
-        className="absolute top-0 z-30 h-full w-px bg-gradient-to-b from-transparent via-paper to-transparent"
+        className="absolute top-0 z-30 h-full w-0.5 bg-paper shadow-[0_0_18px_rgba(255,255,255,0.45)]"
         style={{ left: `${sliderXPercent}%` }}
         transition={{ duration: 0 }}
       >
         {showHandlebar ? (
-          <div className="absolute top-1/2 left-1/2 flex size-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-paper text-ink shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
+          <div
+            className={`absolute top-1/2 left-1/2 flex size-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-paper text-ink shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${live ? "animate-pulse" : ""}`}
+          >
             <span className="sr-only">Arraste para comparar</span>
-            <span aria-hidden="true" className="flex gap-0.5">
-              <span className="h-3.5 w-px bg-ink/70" />
-              <span className="h-3.5 w-px bg-ink/70" />
+            <span aria-hidden="true" className="flex items-center gap-0.5">
+              <ChevronLeft className="size-5" strokeWidth={2.4} />
+              <ChevronRight className="size-5 -ml-1.5" strokeWidth={2.4} />
             </span>
           </div>
         ) : null}

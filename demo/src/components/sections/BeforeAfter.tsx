@@ -29,14 +29,16 @@ export function BeforeAfter() {
             firstImageAlt={site.images.beforeAlt}
             secondImageAlt={site.images.afterAlt}
             slideMode="drag"
+            autoplay
+            autoplayDuration={3800}
             className="aspect-[3/4] w-full bg-line"
             onInteract={() => setHint(false)}
           />
-          <div className="pointer-events-none absolute inset-x-4 top-4 flex justify-between md:inset-x-6 md:top-6">
-            <span className="font-mono text-[10px] tracking-[0.28em] text-white uppercase">
+          <div className="pointer-events-none absolute inset-x-3 top-3 z-40 flex justify-between md:inset-x-5 md:top-5">
+            <span className="rounded-full bg-black/80 px-3.5 py-1.5 font-mono text-[11px] tracking-[0.22em] text-white uppercase shadow-[0_8px_20px_rgba(0,0,0,0.35)] backdrop-blur-sm md:px-4 md:text-xs">
               Antes
             </span>
-            <span className="font-mono text-[10px] tracking-[0.28em] text-white uppercase">
+            <span className="rounded-full bg-black/80 px-3.5 py-1.5 font-mono text-[11px] tracking-[0.22em] text-white uppercase shadow-[0_8px_20px_rgba(0,0,0,0.35)] backdrop-blur-sm md:px-4 md:text-xs">
               Depois
             </span>
           </div>

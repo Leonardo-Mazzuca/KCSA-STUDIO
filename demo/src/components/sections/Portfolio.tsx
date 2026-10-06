@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { PhotoPlane } from "@/components/media/PhotoPlane";
-import { PhotoRing } from "@/components/media/PhotoRing";
-import { PhotoScene } from "@/components/media/PhotoScene";
 import { ProjectLightbox } from "@/components/ProjectLightbox";
 import { Reveal } from "@/components/Reveal";
 import { projectById, type Project } from "@/data/projects";
@@ -12,30 +10,55 @@ function metaFor(project: Project) {
   return `${project.category} · ${project.year}`;
 }
 
+const galleryIds = [
+  "esconderijo",
+  "o-olhar",
+  "noiva",
+  "danca",
+  "clareza",
+  "mestre",
+  "gesto-de-fe",
+  "samba",
+  "festa",
+  "colo",
+  "celebracao",
+  "jorge",
+  "afeto",
+  "terra",
+  "sol",
+  "ritmo",
+  "presenca",
+  "canto",
+  "maos-no-ar",
+  "voz",
+] as const;
+
+const crops: Record<string, string> = {
+  esconderijo: "object-[48%_42%]",
+  "o-olhar": "object-[50%_26%]",
+  noiva: "object-[50%_18%]",
+  danca: "object-[50%_28%]",
+  clareza: "object-[50%_18%]",
+  mestre: "object-[50%_18%]",
+  "gesto-de-fe": "object-[50%_22%]",
+  samba: "object-[50%_28%]",
+  festa: "object-[50%_32%]",
+  colo: "object-[50%_36%]",
+  celebracao: "object-[50%_28%]",
+  jorge: "object-[50%_40%]",
+  afeto: "object-[50%_32%]",
+  terra: "object-[50%_28%]",
+  sol: "object-[50%_30%]",
+  ritmo: "object-[50%_40%]",
+  presenca: "object-[50%_20%]",
+  canto: "object-[50%_22%]",
+  "maos-no-ar": "object-[48%_38%]",
+  voz: "object-[48%_24%]",
+};
+
 export function Portfolio() {
   const [selected, setSelected] = useState<Project | null>(null);
-  const featured = projectById("esconderijo");
-  const olhar = projectById("o-olhar");
-  const noiva = projectById("noiva");
-  const danca = projectById("danca");
-  const clareza = projectById("clareza");
-  const fe = projectById("gesto-de-fe");
-  const presenca = projectById("presenca");
-  const samba = projectById("samba");
-  const maos = projectById("maos-no-ar");
-  const voz = projectById("voz");
-  const strip = [
-    "mestre",
-    "colo",
-    "afeto",
-    "terra",
-    "celebracao",
-    "jorge",
-    "ritmo",
-    "festa",
-    "canto",
-    "sol",
-  ]
+  const gallery = galleryIds
     .map(projectById)
     .filter((item): item is Project => Boolean(item));
 
@@ -46,7 +69,7 @@ export function Portfolio() {
           <p className="font-mono text-[10px] tracking-[0.36em] text-muted uppercase">
             02 / Portfólio
           </p>
-          <h2 className="font-display mt-5 max-w-[16ch] text-[clamp(2.4rem,7.4vw,6.8rem)] leading-[0.88] font-light tracking-[-0.05em]">
+          <h2 className="font-display mt-5 max-w-[16ch] text-[clamp(2.4rem,7.4vw,6.8rem)] leading-[0.88] font-light tracking-tighter">
             O que fica quando o momento passa.
           </h2>
           <div className="mt-8 max-w-md space-y-4 text-sm leading-relaxed text-foreground/70 md:mt-10 md:text-base">
@@ -67,206 +90,22 @@ export function Portfolio() {
       </div>
 
       <div id="galeria" className="relative">
-        {featured ? (
-          <button
-            type="button"
-            onClick={() => setSelected(featured)}
-            data-cursor="image"
-            className="relative block h-[68svh] w-full overflow-hidden md:h-[78svh]"
-          >
-            <img
-              src={featured.image}
-              alt={featured.alt}
-              sizes="100vw"
-              className="h-full w-full object-cover object-[50%_22%]"
+        <div className="grid grid-cols-1 gap-6 px-5 sm:grid-cols-2 sm:gap-5 md:gap-6 md:px-10 lg:gap-7 lg:px-14">
+          {gallery.map((project, index) => (
+            <PhotoPlane
+              key={project.id}
+              src={project.image}
+              alt={project.alt}
+              caption={project.title}
+              meta={metaFor(project)}
+              overlay
+              priority={index < 4}
+              className="w-full"
+              imgClassName={`aspect-[4/5] ${crops[project.id] ?? "object-center"}`}
+              sizes="(min-width: 640px) 48vw, 100vw"
+              onOpen={() => setSelected(project)}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/15 to-transparent" />
-            <div className="absolute inset-x-5 bottom-8 flex items-end justify-between gap-6 md:inset-x-10 md:bottom-12 lg:inset-x-14">
-              <div>
-                <p className="font-mono text-[10px] tracking-[0.32em] text-white/55 uppercase">
-                  {metaFor(featured)}
-                </p>
-                <p className="font-display mt-2 text-4xl tracking-tight text-white md:text-7xl">
-                  {featured.title}
-                </p>
-              </div>
-              <span className="font-mono hidden text-[10px] tracking-[0.28em] text-white/70 uppercase md:inline">
-                Abrir
-              </span>
-            </div>
-          </button>
-        ) : null}
-
-        <PhotoScene className="relative mt-16 overflow-x-clip px-5 md:mt-24 md:px-10 lg:px-14">
-          <div className="grid items-start gap-10 md:grid-cols-12 md:gap-x-12">
-            {olhar ? (
-              <div className="md:col-span-7">
-                <PhotoPlane
-                  src={olhar.image}
-                  alt={olhar.alt}
-                  caption={olhar.title}
-                  meta={metaFor(olhar)}
-                  tilt
-                  className="w-full"
-                  imgClassName="aspect-[3/4] object-[50%_26%]"
-                  sizes="(min-width: 768px) 52vw, 86vw"
-                  onOpen={() => setSelected(olhar)}
-                />
-              </div>
-            ) : null}
-            <div className="flex flex-col gap-10 md:col-span-5 md:gap-14 md:pt-10 lg:pt-16">
-              {noiva ? (
-                <div className="ml-auto w-[72%] md:ml-0 md:w-full">
-                  <PhotoPlane
-                    src={noiva.image}
-                    alt={noiva.alt}
-                    caption={noiva.title}
-                    meta={metaFor(noiva)}
-                    tilt
-                    intensity={0.9}
-                    className="w-full"
-                    imgClassName="aspect-[4/5] object-[50%_18%]"
-                    sizes="(min-width: 768px) 38vw, 72vw"
-                    onOpen={() => setSelected(noiva)}
-                  />
-                </div>
-              ) : null}
-              {voz ? (
-                <div className="w-[62%] md:w-[78%]">
-                  <PhotoPlane
-                    src={voz.image}
-                    alt={voz.alt}
-                    caption={voz.title}
-                    meta={metaFor(voz)}
-                    className="w-full"
-                    imgClassName="aspect-[3/4] object-[50%_20%]"
-                    sizes="(min-width: 768px) 28vw, 62vw"
-                    onOpen={() => setSelected(voz)}
-                  />
-                </div>
-              ) : null}
-            </div>
-          </div>
-        </PhotoScene>
-
-        {danca ? (
-          <Reveal>
-            <div className="mt-16 md:mt-24">
-              <PhotoPlane
-                src={danca.image}
-                alt={danca.alt}
-                caption={danca.title}
-                meta={`${danca.location ?? site.location.city} · ${danca.year}`}
-                overlay
-                className="w-full"
-                imgClassName="aspect-[4/5] object-[50%_28%] sm:aspect-[16/8]"
-                sizes="100vw"
-                onOpen={() => setSelected(danca)}
-              />
-            </div>
-          </Reveal>
-        ) : null}
-
-        {clareza ? (
-          <Reveal>
-            <div className="mt-16 px-5 md:mt-24 md:px-10 lg:px-14">
-              <div className="w-[86%] md:w-[46%]">
-                <PhotoPlane
-                  src={clareza.image}
-                  alt={clareza.alt}
-                  caption={clareza.title}
-                  meta={metaFor(clareza)}
-                  tilt
-                  className="w-full"
-                  imgClassName="aspect-[4/5] object-[50%_18%]"
-                  sizes="(min-width: 768px) 46vw, 86vw"
-                  onOpen={() => setSelected(clareza)}
-                />
-              </div>
-            </div>
-          </Reveal>
-        ) : null}
-
-        <div className="relative mt-16 grid items-start gap-8 px-5 md:mt-24 md:grid-cols-2 md:gap-10 md:px-10 lg:px-14">
-          {fe ? (
-            <Reveal>
-              <PhotoPlane
-                src={fe.image}
-                alt={fe.alt}
-                caption={fe.title}
-                meta={metaFor(fe)}
-                tilt
-                className="w-full"
-                imgClassName="aspect-[3/4] object-[50%_18%]"
-                sizes="(min-width: 768px) 44vw, 100vw"
-                onOpen={() => setSelected(fe)}
-              />
-            </Reveal>
-          ) : null}
-          {presenca ? (
-            <Reveal delay={0.08} className="md:pt-16">
-              <PhotoPlane
-                src={presenca.image}
-                alt={presenca.alt}
-                caption={presenca.title}
-                meta={metaFor(presenca)}
-                className="w-full"
-                imgClassName="aspect-[3/4] object-[50%_16%]"
-                sizes="(min-width: 768px) 44vw, 86vw"
-                onOpen={() => setSelected(presenca)}
-              />
-            </Reveal>
-          ) : null}
-        </div>
-
-        {samba ? (
-          <Reveal>
-            <div className="relative mt-14 md:mt-20">
-              <p className="font-display pointer-events-none absolute top-8 left-5 z-10 text-[clamp(3.5rem,14vw,12rem)] leading-none tracking-[-0.06em] text-white/15 md:top-12 md:left-14">
-                Toque
-              </p>
-              <PhotoPlane
-                src={samba.image}
-                alt={samba.alt}
-                overlay
-                caption={samba.title}
-                meta={metaFor(samba)}
-                className="w-full"
-                imgClassName="aspect-[4/5] object-[50%_30%] md:aspect-[16/9]"
-                sizes="100vw"
-                onOpen={() => setSelected(samba)}
-              />
-            </div>
-          </Reveal>
-        ) : null}
-
-        {maos ? (
-          <Reveal>
-            <div className="mt-6 md:mt-8">
-              <PhotoPlane
-                src={maos.image}
-                alt={maos.alt}
-                caption={maos.title}
-                meta={metaFor(maos)}
-                overlay
-                className="w-full"
-                imgClassName="aspect-[4/5] object-[50%_40%] sm:aspect-[16/7]"
-                sizes="100vw"
-                onOpen={() => setSelected(maos)}
-              />
-            </div>
-          </Reveal>
-        ) : null}
-
-        <div className="mt-16 md:mt-24">
-          <p className="font-mono mb-4 px-5 text-[10px] tracking-[0.32em] text-muted uppercase md:mb-6 md:px-10 lg:px-14">
-            Outros instantes
-          </p>
-          <PhotoRing
-            projects={strip}
-            onSelect={setSelected}
-            paused={Boolean(selected)}
-          />
+          ))}
         </div>
       </div>
 
