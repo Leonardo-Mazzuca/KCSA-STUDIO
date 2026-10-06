@@ -38,28 +38,30 @@ function Atmosphere() {
 
 function LogoMark({
   reduced,
-  isMobile,
   scrollProgress,
 }: {
   reduced: boolean;
-  isMobile: boolean;
   scrollProgress: number;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [visible, setVisible] = useState(false);
-  const scale = 1 - scrollProgress * 0.16;
+  const [playing, setPlaying] = useState(false);
+  const fade = 1 - scrollProgress * 0.45;
   const lift = scrollProgress * 24;
+  const scale = 1 - scrollProgress * 0.16;
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || reduced) return;
 
     const play = () => {
       video.muted = true;
       video.play().catch(() => undefined);
     };
 
-    const show = () => setVisible(true);
+    const show = () => {
+      if (video.readyState >= 2) setPlaying(true);
+    };
+
     if (video.readyState >= 2) show();
     video.addEventListener("playing", show);
     video.addEventListener("loadeddata", show);
@@ -87,41 +89,41 @@ function LogoMark({
       video.removeEventListener("loadeddata", show);
       video.pause();
     };
-  }, [isMobile, reduced]);
-
-  const mediaStyle = {
-    opacity: visible ? 1 - scrollProgress * 0.45 : 0,
-  } as const;
+  }, [reduced]);
 
   return (
     <div
       className="pointer-events-none absolute inset-0 z-[15] grid place-items-center pb-28 md:pb-36"
-      style={{
-        transform: `translate3d(0, ${-lift}px, 0) scale(${scale})`,
-      }}
+      style={
+        scrollProgress
+          ? { transform: `translate3d(0, ${-lift}px, 0) scale(${scale})` }
+          : undefined
+      }
     >
       <div className="logo-plate">
-        {reduced ? (
-          <img
-            src={site.video.poster}
-            alt={site.video.alt}
-            width={720}
-            height={720}
-            className="logo-key"
-            style={mediaStyle}
-            onLoad={() => setVisible(true)}
-          />
-        ) : (
+        <img
+          src={site.logo}
+          alt={reduced || !playing ? site.video.alt : ""}
+          width={1254}
+          height={1254}
+          decoding="async"
+          fetchPriority="high"
+          className="logo-key"
+          style={{ opacity: playing ? 0 : fade }}
+        />
+        {reduced ? null : (
           <video
             ref={videoRef}
             className="logo-key"
-            style={mediaStyle}
-            src={isMobile ? site.video.mobile : site.video.src}
+            style={{ opacity: playing ? fade : 0 }}
+            src={site.video.src}
+            poster={site.logo}
             muted
             loop
             playsInline
             autoPlay
             preload="auto"
+            aria-hidden={playing ? undefined : true}
             aria-label={site.video.alt}
           />
         )}
@@ -253,13 +255,10 @@ export function HeroStage({ scrollProgress }: HeroStageProps) {
         />
       ) : null}
 
-      {profile ? (
-        <LogoMark
-          reduced={profile.reducedMotion}
-          isMobile={profile.isMobile}
-          scrollProgress={scrollProgress}
-        />
-      ) : null}
+      <LogoMark
+        reduced={Boolean(profile?.reducedMotion)}
+        scrollProgress={scrollProgress}
+      />
     </div>
   );
 }

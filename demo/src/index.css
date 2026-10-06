@@ -141,31 +141,33 @@
 }
 
 .logo-plate {
-  width: min(68vw, 28rem);
+  position: relative;
+  width: min(86vw, 32rem);
   aspect-ratio: 2.2 / 1;
   overflow: hidden;
   -webkit-mask-image: radial-gradient(
-    ellipse 74% 70% at 50% 48%,
-    #000 38%,
-    transparent 78%
+    ellipse 78% 72% at 50% 48%,
+    #000 42%,
+    transparent 80%
   );
   mask-image: radial-gradient(
-    ellipse 74% 70% at 50% 48%,
-    #000 38%,
-    transparent 78%
+    ellipse 78% 72% at 50% 48%,
+    #000 42%,
+    transparent 80%
   );
 }
 
 .logo-key {
+  position: absolute;
+  inset: 0;
   display: block;
-  width: 124%;
-  height: 168%;
+  width: 100%;
+  height: 100%;
   max-width: none;
-  margin: -22% -12%;
   object-fit: cover;
   object-position: 50% 46%;
   mix-blend-mode: screen;
-  transition: opacity 480ms ease;
+  transition: opacity 420ms ease;
 }
 
 .film-grain {
