@@ -3,6 +3,7 @@
  * Instagram, e-mail e WhatsApp podem ser alterados aqui.
  */
 export const site = {
+  url: "https://kcsastudio.com",
   name: "Kelvin Carlos",
   brand: "KCSA STUDIO",
   shortName: "KC",

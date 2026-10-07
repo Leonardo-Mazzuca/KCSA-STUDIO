@@ -14,6 +14,7 @@ export function Services() {
         {services.map((service) => (
           <li
             key={service.id}
+            id={service.id}
             className="group border-t border-foreground/10 last:border-b"
           >
             <article className="grid gap-3 py-8 md:grid-cols-12 md:items-baseline md:gap-8 md:py-12">

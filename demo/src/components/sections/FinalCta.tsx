@@ -19,6 +19,8 @@ export function FinalCta() {
           src={site.images.closing}
           alt={site.images.closingAlt}
           sizes="100vw"
+          loading="lazy"
+          decoding="async"
           className="h-full w-full object-cover"
           style={{
             objectPosition: "50% 22%",
@@ -37,7 +39,7 @@ export function FinalCta() {
           <a
             href={site.contact.whatsapp}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="group font-mono mt-8 inline-flex items-center gap-3 text-[10px] tracking-[0.32em] text-white uppercase"
           >
             {site.cta.session}

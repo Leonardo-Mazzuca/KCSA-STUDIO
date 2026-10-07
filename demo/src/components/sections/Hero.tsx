@@ -56,7 +56,7 @@ export function Hero() {
                 <a
                   href={site.contact.whatsapp}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="group font-mono inline-flex items-center gap-3 text-[10px] tracking-[0.3em] text-white/70 uppercase transition-colors hover:text-white"
                 >
                   {site.contact.whatsappLabel}

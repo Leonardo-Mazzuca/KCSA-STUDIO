@@ -47,12 +47,12 @@ export function ProjectLightbox({ project, onClose }: ProjectLightboxProps) {
               {project.category}
               {project.location ? ` · ${project.location}` : ""} · {project.year}
             </p>
-            <h2
+            <p
               id="projeto-titulo"
               className="font-display mt-1 truncate text-2xl tracking-tight md:text-4xl"
             >
               {project.title}
-            </h2>
+            </p>
           </div>
           <button
             type="button"

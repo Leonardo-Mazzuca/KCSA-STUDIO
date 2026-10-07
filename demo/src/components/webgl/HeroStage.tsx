@@ -16,24 +16,66 @@ function Atmosphere() {
       <img
         src={site.images.space[0]}
         alt=""
+        decoding="async"
+        fetchPriority="low"
         className="absolute top-[12%] left-[-18%] h-[58%] w-[58%] object-cover opacity-[0.22] md:left-[-8%] md:w-[38%] md:opacity-[0.28]"
         style={{ objectPosition: "50% 22%" }}
       />
       <img
         src={site.images.space[1]}
         alt=""
+        decoding="async"
+        fetchPriority="low"
         className="absolute right-[-16%] bottom-[8%] hidden h-[46%] w-[42%] object-cover opacity-[0.18] md:block"
         style={{ objectPosition: "50% 18%" }}
       />
       <img
         src={site.images.space[2]}
         alt=""
+        decoding="async"
+        fetchPriority="low"
         className="absolute top-[6%] right-[-10%] h-[34%] w-[40%] object-cover opacity-[0.16] md:right-[4%] md:w-[22%]"
         style={{ objectPosition: "50% 40%" }}
       />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,5,5,0.35)_55%,#050505_88%)]" />
     </div>
   );
+}
+
+function paintLogoFrame(
+  source: CanvasImageSource,
+  sourceWidth: number,
+  sourceHeight: number,
+  canvas: HTMLCanvasElement,
+) {
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  if (!ctx || !sourceWidth || !sourceHeight || !canvas.clientWidth) return;
+
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const width = Math.max(1, Math.round(canvas.clientWidth * dpr));
+  const height = Math.max(1, Math.round(canvas.clientHeight * dpr));
+  if (canvas.width !== width || canvas.height !== height) {
+    canvas.width = width;
+    canvas.height = height;
+  }
+
+  const scale = Math.max(width / sourceWidth, height / sourceHeight);
+  const dw = sourceWidth * scale;
+  const dh = sourceHeight * scale;
+  const dx = (width - dw) * 0.5;
+  const dy = (height - dh) * 0.46;
+
+  ctx.clearRect(0, 0, width, height);
+  ctx.drawImage(source, dx, dy, dw, dh);
+
+  const frame = ctx.getImageData(0, 0, width, height);
+  const data = frame.data;
+  for (let i = 0; i < data.length; i += 4) {
+    const luma = data[i] * 0.2126 + data[i + 1] * 0.7152 + data[i + 2] * 0.0722;
+    const alpha = luma <= 10 ? 0 : luma >= 42 ? 1 : (luma - 10) / 32;
+    data[i + 3] = alpha * 255;
+  }
+  ctx.putImageData(frame, 0, 0);
 }
 
 function LogoMark({
@@ -44,14 +86,40 @@ function LogoMark({
   scrollProgress: number;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [playing, setPlaying] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const videoOnRef = useRef(false);
+  const [markReady, setMarkReady] = useState(false);
   const fade = 1 - scrollProgress * 0.45;
   const lift = scrollProgress * 24;
   const scale = 1 - scrollProgress * 0.16;
 
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const image = new Image();
+    image.src = site.logo;
+    let cancelled = false;
+
+    const draw = () => {
+      if (cancelled || videoOnRef.current || !image.naturalWidth) return;
+      paintLogoFrame(image, image.naturalWidth, image.naturalHeight, canvas);
+      setMarkReady(true);
+    };
+
+    if (image.complete) draw();
+    else image.addEventListener("load", draw);
+
+    return () => {
+      cancelled = true;
+      image.removeEventListener("load", draw);
+    };
+  }, []);
+
+  useEffect(() => {
     const video = videoRef.current;
-    if (!video || reduced) return;
+    const canvas = canvasRef.current;
+    if (!video || !canvas || reduced) return;
 
     const play = () => {
       video.muted = true;
@@ -59,30 +127,54 @@ function LogoMark({
     };
 
     const show = () => {
-      if (video.readyState >= 2) setPlaying(true);
+      if (video.readyState < 2 || !video.videoWidth) return;
+      videoOnRef.current = true;
+      paintLogoFrame(video, video.videoWidth, video.videoHeight, canvas);
+      setMarkReady(true);
     };
 
     if (video.readyState >= 2) show();
     video.addEventListener("playing", show);
     video.addEventListener("loadeddata", show);
-    play();
+
+    let canPlay = false;
+    const start = window.setTimeout(() => {
+      canPlay = true;
+      play();
+    }, 1200);
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        if (!canPlay) return;
         if (entry.isIntersecting) play();
         else video.pause();
       },
       { threshold: 0.08 },
     );
-    observer.observe(video);
+    observer.observe(canvas);
 
     const onVisibility = () => {
+      if (!canPlay) return;
       if (document.hidden) video.pause();
       else play();
     };
     document.addEventListener("visibilitychange", onVisibility);
 
+    let raf = 0;
+    let lastTime = -1;
+    const tick = () => {
+      raf = window.requestAnimationFrame(tick);
+      if (video.paused || video.readyState < 2) return;
+      if (video.currentTime === lastTime) return;
+      lastTime = video.currentTime;
+      videoOnRef.current = true;
+      paintLogoFrame(video, video.videoWidth, video.videoHeight, canvas);
+    };
+    raf = window.requestAnimationFrame(tick);
+
     return () => {
+      window.clearTimeout(start);
+      window.cancelAnimationFrame(raf);
       observer.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
       video.removeEventListener("playing", show);
@@ -103,27 +195,28 @@ function LogoMark({
       <div className="logo-plate">
         <img
           src={site.logo}
-          alt={reduced || !playing ? site.video.alt : ""}
+          alt={site.video.alt}
           width={1254}
           height={1254}
           decoding="async"
           fetchPriority="high"
+          className="sr-only"
+        />
+        <canvas
+          ref={canvasRef}
           className="logo-key"
-          style={{ opacity: playing ? 0 : fade }}
+          style={{ opacity: markReady ? fade : 0 }}
+          aria-hidden="true"
         />
         {reduced ? null : (
           <video
             ref={videoRef}
-            className="logo-key"
-            style={{ opacity: playing ? fade : 0 }}
+            className="logo-source"
             src={site.video.src}
-            poster={site.logo}
             muted
             loop
             playsInline
-            autoPlay
-            preload="auto"
-            aria-hidden={playing ? undefined : true}
+            preload="none"
             aria-label={site.video.alt}
           />
         )}

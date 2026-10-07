@@ -88,6 +88,12 @@
   #tratamento,
   #sobre,
   #servicos,
+  #ensaios,
+  #eventos,
+  #casamentos,
+  #retratos,
+  #corporativo,
+  #audiovisual,
   #contato {
     scroll-margin-top: 5.5rem;
   }
@@ -145,16 +151,6 @@
   width: min(86vw, 32rem);
   aspect-ratio: 2.2 / 1;
   overflow: hidden;
-  -webkit-mask-image: radial-gradient(
-    ellipse 78% 72% at 50% 48%,
-    #000 42%,
-    transparent 80%
-  );
-  mask-image: radial-gradient(
-    ellipse 78% 72% at 50% 48%,
-    #000 42%,
-    transparent 80%
-  );
 }
 
 .logo-key {
@@ -166,8 +162,15 @@
   max-width: none;
   object-fit: cover;
   object-position: 50% 46%;
-  mix-blend-mode: screen;
   transition: opacity 420ms ease;
+}
+
+.logo-source {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .film-grain {

@@ -1,4 +1,9 @@
+import { navigation } from "@/data/navigation";
 import { site } from "@/data/site";
+
+const sectionLinks = navigation.filter((item) =>
+  ["#trabalhos", "#sobre", "#servicos"].includes(item.href),
+);
 
 export function Footer() {
   return (
@@ -8,11 +13,23 @@ export function Footer() {
           {site.name}
         </p>
 
+        <nav aria-label="Seções" className="flex flex-col gap-3">
+          {sectionLinks.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="font-mono text-[10px] tracking-[0.22em] text-muted uppercase transition-colors hover:text-foreground"
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
         <div className="flex flex-col gap-3 sm:items-end">
           <a
             href={site.contact.whatsapp}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="font-mono text-[10px] tracking-[0.22em] text-muted uppercase transition-colors hover:text-foreground"
           >
             {site.contact.whatsappLabel}
@@ -20,7 +37,7 @@ export function Footer() {
           <a
             href={site.contact.instagram}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="font-mono text-[10px] tracking-[0.22em] text-muted uppercase transition-colors hover:text-foreground"
           >
             {site.contact.instagramHandle}

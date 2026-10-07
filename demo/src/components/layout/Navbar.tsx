@@ -59,7 +59,7 @@ export function Navbar() {
           <a
             href={site.contact.whatsapp}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="font-mono inline-flex items-center gap-2 text-[10px] tracking-[0.28em] uppercase transition-colors hover:text-paper"
           >
             {site.contact.whatsappLabel}
@@ -98,7 +98,7 @@ export function Navbar() {
                         : item.href
                     }
                     target={item.href === "#contato" ? "_blank" : undefined}
-                    rel={item.href === "#contato" ? "noreferrer" : undefined}
+                    rel={item.href === "#contato" ? "noopener noreferrer" : undefined}
                     onClick={() => setOpen(false)}
                     className="font-display flex items-baseline gap-4 py-2 text-5xl tracking-tight"
                   >

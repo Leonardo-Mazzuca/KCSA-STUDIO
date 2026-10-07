@@ -227,7 +227,7 @@ export function PhotoRing({ projects, onSelect, paused = false }: PhotoRingProps
           >
             <img
               src={project.image}
-              alt=""
+              alt={project.alt}
               sizes="(min-width: 768px) 40vw, 78vw"
               loading="lazy"
               decoding="async"

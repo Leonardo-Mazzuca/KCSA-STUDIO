@@ -26,7 +26,7 @@ export function Closing() {
       <a
         href={site.contact.whatsapp}
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
         className="group font-mono mt-12 inline-flex items-center gap-3 bg-paper px-7 py-4 text-[10px] tracking-[0.32em] text-ink uppercase transition-colors hover:bg-foreground"
       >
         {site.contact.whatsappLabel}

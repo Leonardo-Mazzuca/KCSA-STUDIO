@@ -18,7 +18,7 @@ export function WhatsAppFloat() {
     <a
       href={site.contact.whatsapp}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
       aria-label={`${site.contact.whatsappLabel} no WhatsApp`}
       className="fixed right-5 bottom-[max(1.25rem,env(safe-area-inset-bottom))] z-40 inline-flex size-16 items-center justify-center overflow-hidden rounded-full bg-paper text-ink shadow-[0_10px_30px_rgba(0,0,0,0.38)] transition-transform duration-300 hover:scale-105 md:right-7 md:bottom-7"
     >

@@ -33,7 +33,7 @@ export function Instagram() {
             <a
               href={site.contact.instagram}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="group font-mono mt-3 inline-flex items-center gap-3 text-[10px] tracking-[0.28em] uppercase"
             >
               {site.contact.instagramHandle}
@@ -49,7 +49,7 @@ export function Instagram() {
             key={image.id}
             href={site.contact.instagram}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             data-cursor="image"
             aria-label={`Ver ${image.title} no Instagram`}
             className={`group absolute overflow-hidden ${placements[index] ?? "hidden"}`}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { PhotoPlane } from "@/components/media/PhotoPlane";
+import { PhotoRing } from "@/components/media/PhotoRing";
 import { ProjectLightbox } from "@/components/ProjectLightbox";
 import { Reveal } from "@/components/Reveal";
 import { projectById, type Project } from "@/data/projects";
@@ -16,21 +17,24 @@ const galleryIds = [
   "noiva",
   "danca",
   "clareza",
-  "mestre",
   "gesto-de-fe",
   "samba",
-  "festa",
-  "colo",
-  "celebracao",
-  "jorge",
-  "afeto",
-  "terra",
-  "sol",
-  "ritmo",
   "presenca",
-  "canto",
   "maos-no-ar",
   "voz",
+] as const;
+
+const stripIds = [
+  "mestre",
+  "colo",
+  "afeto",
+  "terra",
+  "celebracao",
+  "jorge",
+  "ritmo",
+  "festa",
+  "canto",
+  "sol",
 ] as const;
 
 const crops: Record<string, string> = {
@@ -59,6 +63,9 @@ const crops: Record<string, string> = {
 export function Portfolio() {
   const [selected, setSelected] = useState<Project | null>(null);
   const gallery = galleryIds
+    .map(projectById)
+    .filter((item): item is Project => Boolean(item));
+  const strip = stripIds
     .map(projectById)
     .filter((item): item is Project => Boolean(item));
 
@@ -107,6 +114,19 @@ export function Portfolio() {
             />
           ))}
         </div>
+
+        {strip.length ? (
+          <div className="mt-16 md:mt-24">
+            <p className="font-mono mb-4 px-5 text-[10px] tracking-[0.32em] text-muted uppercase md:mb-6 md:px-10 lg:px-14">
+              Outros instantes
+            </p>
+            <PhotoRing
+              projects={strip}
+              onSelect={setSelected}
+              paused={Boolean(selected)}
+            />
+          </div>
+        ) : null}
       </div>
 
       <ProjectLightbox project={selected} onClose={() => setSelected(null)} />

@@ -10,6 +10,8 @@ export function Differentiator() {
         src={site.images.differentiator}
         alt={site.images.differentiatorAlt}
         sizes="100vw"
+        loading="lazy"
+        decoding="async"
         className="absolute inset-0 h-full w-full object-cover"
         style={{ objectPosition: "50% 28%" }}
       />

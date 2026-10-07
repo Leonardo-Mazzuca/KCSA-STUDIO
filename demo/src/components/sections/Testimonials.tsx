@@ -11,6 +11,8 @@ export function Testimonials() {
         src={site.images.testimonials}
         alt=""
         aria-hidden="true"
+        loading="lazy"
+        decoding="async"
         className="absolute inset-0 h-full w-full object-cover opacity-25"
         style={{ objectPosition: "50% 40%" }}
       />

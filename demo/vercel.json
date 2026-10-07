@@ -3,7 +3,28 @@
   "installCommand": "npm install",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.kcsastudio.com" }],
+      "destination": "https://kcsastudio.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "kcsa-studio.vercel.app" }],
+      "destination": "https://kcsastudio.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/demo",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/demo/",
+      "destination": "/",
+      "permanent": true
+    }
   ]
 }
